@@ -8,6 +8,13 @@
 
 <a asp-action="AddTask" class="btn btn-primary" style="margin-top: 15px; margin-bottom: 15px;">Dodaj zadanie</a>
 
+<form>
+    <p>
+        Tytuł zadania: @Html.TextBox("SearchString")
+        <input type="submit" value="Szukaj" />
+    </p>
+</form>
+
 @Html.Partial("StartedTasks")
 @Html.Partial("EndedTasks")
 

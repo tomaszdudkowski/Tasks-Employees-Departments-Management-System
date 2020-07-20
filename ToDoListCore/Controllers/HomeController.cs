@@ -28,9 +28,14 @@ namespace ToDoListCore.Controllers
             return View();
         }
 
-        public ViewResult Main()
+        public ViewResult Main(string SearchString)
         {
-            return View(_context.Zadania);
+            var tasks = _context.Zadania.ToList();
+            if(!String.IsNullOrEmpty(SearchString))
+            {
+                tasks = tasks.Where(t => t.Title.ToLower().Contains(SearchString.ToLower())).ToList();
+            }
+            return View(tasks);
         }
 
         [HttpGet]
@@ -40,8 +45,9 @@ namespace ToDoListCore.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddTask([Bind("ID, StartTime, EndTime, Title, Description")] Zadanie task)
+        public IActionResult AddTask([Bind("ID, StartTime, EndTime, Title, Description, IsEnd")] Zadanie task)
         {
+            task.IsEnd = false;
             _context.Zadania.Add(task);
             _context.SaveChanges();
             return RedirectToAction("Main");
@@ -71,7 +77,7 @@ namespace ToDoListCore.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditTask(int id, [Bind("ID, StartTime, EndTime, Title, Description")] Zadanie task)
+        public IActionResult EditTask(int id, [Bind("ID, StartTime, EndTime, Title, Description, IsEnd")] Zadanie task)
         {
             if (id != task.ID)
             {
@@ -99,6 +105,28 @@ namespace ToDoListCore.Controllers
                 return RedirectToAction(nameof(Main));
             }
             return View(task);
+        }
+
+        [HttpGet]
+        public IActionResult EndTask(int id)
+        {
+            Zadanie task = _context.Zadania.Find(id);
+
+            task.IsEnd = true;
+            _context.Update(task);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Main));
+        }
+
+        [HttpGet]
+        public IActionResult ResponeTask(int id)
+        {
+            Zadanie task = _context.Zadania.Find(id);
+
+            task.IsEnd = false;
+            _context.Update(task);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Main));
         }
 
         private bool TaskExist(int id)

@@ -16,11 +16,11 @@
                 if(t.IsEnd == true)
                 {
                     <tr>
-                        <td><a asp-action="ResponeTask" class="btn btn-success btn-sm">Przywróć zadanie</a></td>
+                        <td><a asp-action="ResponeTask" asp-route-id="@t.ID" class="btn btn-danger btn-sm">Przywróć zadanie</a></td>
                         <td>@t.StartTime</td>
                         <td>@t.EndTime</td>
                         <td>@t.Title</td>
-                        <td><a asp-action="DetailTask" class="btn btn-secondary btn-sm">Szczegóły</a> | <a asp-action="EditTask" class="btn btn-secondary btn-sm">Edytuj</a> | <a asp-action="DeleteTask" class="btn btn-secondary btn-sm">Usuń</a></td>
+                        <td><a asp-action="DetailTask" asp-route-id="@t.ID" class="btn btn-secondary btn-sm">Szczegóły</a> | <a asp-action="EditTask" asp-route-id="@t.ID" class="btn btn-secondary btn-sm">Edytuj</a> | <a asp-action="DeleteTask" asp-route-id="@t.ID" class="btn btn-secondary btn-sm">Usuń</a></td>
                     </tr>
                 }
             }

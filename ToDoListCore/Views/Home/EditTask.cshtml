@@ -9,6 +9,7 @@
     <div class="col-md-4">
         <form asp-action="EditTask">
             <input type="hidden" asp-for="ID" />
+            <input type="hidden" asp-for="IsEnd" />
             <div class="form-group">
                 <label asp-for="StartTime">Wybierz czas rozpoczęcia: </label>
                 <input class="form-control" asp-for="StartTime" />
