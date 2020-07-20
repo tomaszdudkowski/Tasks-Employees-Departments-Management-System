@@ -1,32 +1,15 @@
 ﻿<link rel="stylesheet" href="~/css/MainSite.css" />
-@model IEnumerable<Zadanie>
+@model IEnumerable<Zadanie> 
 @{
     ViewData["Title"] = "Main";
 }
 
-<h1>Hello</h1>
+<h1 class="text-primary">Zadania rozpoczęte</h1>
 
-<a asp-action="AddTask">Dodaj zadanie</a>
+<a asp-action="AddTask" class="btn btn-primary" style="margin-top: 15px; margin-bottom: 15px;">Dodaj zadanie</a>
 
-<div>
-    <table class="table table-dark">
-        <thead class="tab">
-            <tr>
-                <th>Data rozpoczecia</th>
-                <th>Data zakończenia</th>
-                <th>Tytuł</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (Zadanie t in Model)
-            {
-                <tr>
-                    <td>@t.StartTime</td>
-                    <td>@t.EndTime</td>
-                    <td>@t.Title</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
+@Html.Partial("StartedTasks")
+@Html.Partial("EndedTasks")
+
+
 

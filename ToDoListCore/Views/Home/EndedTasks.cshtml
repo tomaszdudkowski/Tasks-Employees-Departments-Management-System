@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Zadanie>
+<h1 class="text-primary">Zadania zakończone</h1>
+<div>
+    <table class="table table-dark">
+        <thead class="tab">
+            <tr>
+                <th></th>
+                <th>Data rozpoczecia</th>
+                <th>Data zakończenia</th>
+                <th>Tytuł</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Zadanie t in Model)
+            {
+                if(t.IsEnd == true)
+                {
+                    <tr>
+                        <td><a asp-action="ResponeTask" class="btn btn-success btn-sm">Przywróć zadanie</a></td>
+                        <td>@t.StartTime</td>
+                        <td>@t.EndTime</td>
+                        <td>@t.Title</td>
+                        <td><a asp-action="DetailTask" class="btn btn-secondary btn-sm">Szczegóły</a> | <a asp-action="EditTask" class="btn btn-secondary btn-sm">Edytuj</a> | <a asp-action="DeleteTask" class="btn btn-secondary btn-sm">Usuń</a></td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
