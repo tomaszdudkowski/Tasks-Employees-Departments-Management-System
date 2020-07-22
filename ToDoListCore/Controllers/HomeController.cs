@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -30,12 +28,31 @@ namespace ToDoListCore.Controllers
 
         public ViewResult Main(string SearchString)
         {
-            var tasks = _context.Zadania.ToList();
-            if(!String.IsNullOrEmpty(SearchString))
+            var tasks = _context.Zadania.Include(z => z.Employees).ThenInclude(e => e.Employee);
+            EmployeeTaskVM vM;
+            List<EmployeeTaskVM> EmployeeTaskVMList = new List<EmployeeTaskVM>();
+            foreach(var item in tasks)
+            {
+                foreach(EmpInTask empl in item.Employees)
+                {
+                    vM = new EmployeeTaskVM();
+                    vM.ID = item.ID;
+                    vM.EmployeeID = empl.Employee.EmployeeID;
+                    vM.StartTime = item.StartTime;
+                    vM.EndTime = item.EndTime;
+                    vM.Title = item.Title;
+                    vM.Name = empl.Employee.Name;
+                    vM.Surname = empl.Employee.Surname;
+                    vM.IsEnd = item.IsEnd;
+                    EmployeeTaskVMList.Add(vM);
+                }
+            }
+
+            /*if(!String.IsNullOrEmpty(SearchString))
             {
                 tasks = tasks.Where(t => t.Title.ToLower().Contains(SearchString.ToLower())).ToList();
-            }
-            return View(tasks);
+            }*/
+            return View(EmployeeTaskVMList);
         }
 
         [HttpGet]
@@ -127,6 +144,34 @@ namespace ToDoListCore.Controllers
             _context.Update(task);
             _context.SaveChanges();
             return RedirectToAction(nameof(Main));
+        }
+
+        public void DodajTemp()
+        {
+            Employee empl = new Employee();
+            empl.Name = "Tomasz";
+            empl.Surname = "Dudkowski";
+            empl.EmailAddress = "tomaszszd@gmail.com";
+            empl.PhoneNumber = "+48601775210";
+            empl.DayOfBirthday = DateTime.Now;
+
+            Department dept = new Department();
+            dept.Name = "IT";
+
+            empl.Department = dept;
+
+            Zadanie zadanie = new Zadanie();
+            zadanie.Title = "Program ASP.NET Core";
+            zadanie.Description = "ABCD";
+            zadanie.StartTime = DateTime.Now;
+            zadanie.EndTime = DateTime.Now;
+            zadanie.IsEnd = false;
+
+            EmpInTask eit = new EmpInTask();
+            eit.Zadanie = zadanie;
+            eit.Employee = empl;
+            _context.ZadaniaInTasks.Add(eit);
+            _context.SaveChanges();
         }
 
         private bool TaskExist(int id)

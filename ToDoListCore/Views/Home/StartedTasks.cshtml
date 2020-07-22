@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Zadanie>
+﻿@model IEnumerable<EmployeeTaskVM>
+
 <div>
     <table class="table table-dark">
         <thead class="tab">
@@ -7,18 +8,21 @@
                 <th>Data rozpoczecia</th>
                 <th>Data zakończenia</th>
                 <th>Tytuł</th>
+                <th>Pracownik</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (Zadanie t in Model)
+            @foreach (EmployeeTaskVM t in Model)
             {
-                if (t.IsEnd == false)
+                @if (t.IsEnd == false)
                 {
                     <tr>
                         <td><a asp-action="EndTask" asp-route-id="@t.ID" class="btn btn-success btn-sm">Zakończ zadanie</a></td>
                         <td>@t.StartTime</td>
                         <td>@t.EndTime</td>
                         <td>@t.Title</td>
+                        <td>@t.Name @t.Surname</td>
+                        <td>@t.IsEnd</td>
                         <td><a asp-action="DetailTask" asp-route-id="@t.ID" class="btn btn-secondary btn-sm">Szczegóły</a> | <a asp-action="EditTask" asp-route-id="@t.ID" class="btn btn-secondary btn-sm">Edytuj</a> | <a asp-action="DeleteTask" asp-route-id="@t.ID" class="btn btn-secondary btn-sm">Usuń</a></td>
                     </tr>
                 }

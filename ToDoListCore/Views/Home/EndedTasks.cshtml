@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Zadanie>
+﻿@model IEnumerable<EmployeeTaskVM>
 <h1 class="text-primary">Zadania zakończone</h1>
 <div>
     <table class="table table-dark">
@@ -8,20 +8,23 @@
                 <th>Data rozpoczecia</th>
                 <th>Data zakończenia</th>
                 <th>Tytuł</th>
+                <th>Pracownik</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (Zadanie t in Model)
+            @foreach (EmployeeTaskVM t in Model)
             {
-                if(t.IsEnd == true)
+                @if (t.IsEnd == true)
                 {
-                    <tr>
-                        <td><a asp-action="ResponeTask" asp-route-id="@t.ID" class="btn btn-danger btn-sm">Przywróć zadanie</a></td>
-                        <td>@t.StartTime</td>
-                        <td>@t.EndTime</td>
-                        <td>@t.Title</td>
-                        <td><a asp-action="DetailTask" asp-route-id="@t.ID" class="btn btn-secondary btn-sm">Szczegóły</a> | <a asp-action="EditTask" asp-route-id="@t.ID" class="btn btn-secondary btn-sm">Edytuj</a> | <a asp-action="DeleteTask" asp-route-id="@t.ID" class="btn btn-secondary btn-sm">Usuń</a></td>
-                    </tr>
+            <tr>
+                <td><a asp-action="ResponeTask" asp-route-id="@t.ID" class="btn btn-success btn-sm">Przywróć zadanie</a></td>
+                <td>@t.StartTime</td>
+                <td>@t.EndTime</td>
+                <td>@t.Title</td>
+                <td>@t.Name @t.Surname</td>
+                <td>@t.IsEnd</td>
+                <td><a asp-action="DetailTask" asp-route-id="@t.ID" class="btn btn-secondary btn-sm">Szczegóły</a> | <a asp-action="EditTask" asp-route-id="@t.ID" class="btn btn-secondary btn-sm">Edytuj</a> | <a asp-action="DeleteTask" asp-route-id="@t.ID" class="btn btn-secondary btn-sm">Usuń</a></td>
+            </tr>
                 }
             }
         </tbody>
