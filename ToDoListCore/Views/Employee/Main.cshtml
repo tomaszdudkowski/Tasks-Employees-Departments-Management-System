@@ -1,0 +1,38 @@
+﻿@model IEnumerable<ToDoListCore.ViewModels.EmployeeDepartment>
+@{
+    ViewData["Title"] = "Zarządzanie pracownikami";
+}
+
+<h1>Zarządzanie pracownikami</h1>
+
+<a asp-action="AddEmployee" class="btn btn-primary" style="margin-top: 15px; margin-bottom: 15px;">Dodaj nowego pracownika</a>
+
+<div>
+    <table class="table table-dark">
+        <thead class="tab">
+            <tr>
+                <th>ID</th>
+                <th>Imię</th>
+                <th>Nazwisko</th>
+                <th>Adres E-Mail</th>
+                <th>Numer telefonu</th>
+                <th>Dział</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (ToDoListCore.ViewModels.EmployeeDepartment ed in Model)
+            {
+                <tr>
+                    <td>@ed.EmployeeID</td>
+                    <td>@ed.EmplName</td>
+                    <td>@ed.EmplSurname</td>
+                    <td>@ed.EmailAddress</td>
+                    <td>@ed.PhoneNumber</td>
+                    <td>@ed.DeptName</td>
+                    <td><a asp-action="DetailEmployee" asp-route-id="@ed.EmployeeID" class="btn btn-secondary btn-sm">Szczegóły</a> | <a asp-action="EditEmployee" asp-route-id="@ed.EmployeeID" class="btn btn-secondary btn-sm">Edytuj</a> | <a asp-action="DeleteEmployee" asp-route-id="@ed.EmployeeID" class="btn btn-secondary btn-sm">Usuń</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

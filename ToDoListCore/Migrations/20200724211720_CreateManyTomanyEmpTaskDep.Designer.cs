@@ -10,8 +10,8 @@ using ToDoListCore.DAL;
 namespace ToDoListCore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200722171556_CreateManyToManyEmpTaskDep")]
-    partial class CreateManyToManyEmpTaskDep
+    [Migration("20200724211720_CreateManyTomanyEmpTaskDep")]
+    partial class CreateManyTomanyEmpTaskDep
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

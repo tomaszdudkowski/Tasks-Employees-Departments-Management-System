@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ToDoListCore.Migrations
 {
-    public partial class CreateManyToManyEmpTaskDep : Migration
+    public partial class CreateManyTomanyEmpTaskDep : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

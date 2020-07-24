@@ -1,16 +1,23 @@
-﻿@model Zadanie
+﻿@model ToDoListCore.ViewModels.TaskWithEmpsList
 @{
     ViewData["Title"] = "Szczegóły zadania";
 }
 
 <h1 class="display-4">Szczegóły zadania</h1>
 
-<div>ID: @Model.</div>
+<div>ID: @Model.ID</div>
 <div>Data rozpoczęcia zadania: @Model.StartTime</div>
 <div>Data zakończenia zadania: @Model.EndTime</div>
 <div>Tytuł zadania: @Model.Title</div>
 <div>Opis zadania: @Model.Description</div>
 
-
+<div>
+    <ul>
+        @foreach (Employee e in Model.EmployeesList)
+        {
+            <li>@e.Name @e.Surname</li>
+        }
+    </ul>
+</div>
 
 <a asp-action="Main">Powrót do listy zadań</a>

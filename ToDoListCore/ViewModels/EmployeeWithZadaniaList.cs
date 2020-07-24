@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using ToDoListCore.Models;
 
-namespace ToDoListCore.Models
+namespace ToDoListCore.ViewModels
 {
-    public class Employee
+    public class EmployeeWithZadaniaList
     {
+        // Pracownik
         [Required]
         public int EmployeeID { get; set; }
         [Required(ErrorMessage = "Proszę wprowadzić imię pracownika.")]
@@ -17,7 +18,7 @@ namespace ToDoListCore.Models
         public string Surname { get; set; }
         [Required(ErrorMessage = "Proszę wprowadzić datę urodzenia pracownika.")]
         [DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{dd-MM-yyyy hh:mm}")]
+        [DisplayFormat(DataFormatString = "{dd-MM-yyyy}")]
         public DateTime DayOfBirthday { get; set; }
         [Required(ErrorMessage = "Proszę wprowadzić adres e-mail pracownika.")]
         [EmailAddress]
@@ -27,13 +28,13 @@ namespace ToDoListCore.Models
         [Phone]
         public string PhoneNumber { get; set; }
 
-        [NotMapped]
-        public bool checkBoxEmp { get; set; }
+        //Dział pracownika
+        [Required]
+        public int DepartmentID { get; set; }
+        [Required(ErrorMessage = "Proszę wprowadzić nazwę działu.")]
+        public string DeptName { get; set; }
 
-        //Navigational Property
-        public virtual ICollection<EmpInTask> Zadania { get; set; }
-
-        public int DeptID { get; set; }
-        public Department Department { get; set; }
+        //Lista zadań przypisana do pracownika
+        public List<Zadanie> ZadaniaList { get; set; }
     }
 }

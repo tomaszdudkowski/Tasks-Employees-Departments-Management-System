@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ToDoListCore.DAL;
 using ToDoListCore.Models;
+using ToDoListCore.ViewModels;
 
 namespace ToDoListCore.Controllers
 {
@@ -28,8 +30,8 @@ namespace ToDoListCore.Controllers
 
         public ViewResult Main(string SearchString)
         {
-            var tasks = _context.Zadania.Include(z => z.Employees).ThenInclude(e => e.Employee);
-            EmployeeTaskVM vM;
+            var tasks = _context.Zadania;
+            /*EmployeeTaskVM vM;
             List<EmployeeTaskVM> EmployeeTaskVMList = new List<EmployeeTaskVM>();
             foreach(var item in tasks)
             {
@@ -46,27 +48,61 @@ namespace ToDoListCore.Controllers
                     vM.IsEnd = item.IsEnd;
                     EmployeeTaskVMList.Add(vM);
                 }
-            }
+            }*/
 
+            // Do wyszukiwania - naprawić
             /*if(!String.IsNullOrEmpty(SearchString))
             {
                 tasks = tasks.Where(t => t.Title.ToLower().Contains(SearchString.ToLower())).ToList();
             }*/
-            return View(EmployeeTaskVMList);
+            return View(tasks);
         }
 
         [HttpGet]
         public ViewResult AddTask()
         {
-            return View();
+            var empl = _context.Employees.ToList();
+            TaskWithEmpsList twel = new TaskWithEmpsList();
+            twel.EmployeesList = empl;
+            return View(twel);
         }
 
         [HttpPost]
-        public IActionResult AddTask([Bind("ID, StartTime, EndTime, Title, Description, IsEnd")] Zadanie task)
+        public IActionResult AddTask([Bind("ID, StartTime, EndTime, Title, Description, IsEnd, EmployeesList")] TaskWithEmpsList taskEmp)
         {
-            task.IsEnd = false;
-            _context.Zadania.Add(task);
+            taskEmp.IsEnd = false;
+            EmpInTask eit;
+            Zadanie task = new Zadanie();
+            Employee empl;
+
+            task.ID = taskEmp.ID;
+            task.StartTime = taskEmp.StartTime;
+            task.EndTime = taskEmp.EndTime;
+            task.Title = taskEmp.Title;
+            task.Description = taskEmp.Description;
+            task.IsEnd = taskEmp.IsEnd;
+
+            foreach (var emp in taskEmp.EmployeesList.Where(e => e.checkBoxEmp == true))
+            {
+                empl = new Employee();
+                empl.EmployeeID = emp.EmployeeID;
+                empl.Name = emp.Name;
+                empl.Surname = emp.Surname;
+                empl.DayOfBirthday = emp.DayOfBirthday;
+                empl.EmailAddress = emp.EmailAddress;
+                empl.PhoneNumber = emp.PhoneNumber;
+                empl.DeptID = emp.DeptID;
+
+                eit = new EmpInTask();
+                eit.Zadanie = task;
+                // Nie dodawać pracownika do relacji jako obiekt tylko dodawać jako ID :)
+                // Wtedy działa...
+                //eit.Employee = empl;
+                eit.EmployeeID = empl.EmployeeID;
+                _context.ZadaniaInTasks.Add(eit);
+            }
             _context.SaveChanges();
+
             return RedirectToAction("Main");
         }
 
@@ -82,8 +118,19 @@ namespace ToDoListCore.Controllers
         [HttpGet]
         public IActionResult DetailTask(int id)
         {
-            Zadanie task = _context.Zadania.Find(id);
-            return View(task);
+            var task = _context.Zadania.Include(z => z.Employees).ThenInclude(e => e.Employee).Where(z => z.ID == id).FirstOrDefault();
+            TaskWithEmpsList twel = new TaskWithEmpsList();
+            twel.ID = task.ID;
+            twel.StartTime = task.StartTime;
+            twel.EndTime = task.EndTime;
+            twel.Title = task.Title;
+            twel.Description = task.Description;
+            twel.EmployeesList = new List<Employee>();
+            foreach (EmpInTask item in task.Employees)
+            {
+                twel.EmployeesList.Add(item.Employee);
+            }
+            return View(twel);
         }
 
         [HttpGet]
@@ -105,7 +152,7 @@ namespace ToDoListCore.Controllers
             {
                 try
                 {
-                    _context.Update(task);
+                    _context.Zadania.Update(task);
                     _context.SaveChanges();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -148,17 +195,25 @@ namespace ToDoListCore.Controllers
 
         public void DodajTemp()
         {
-            Employee empl = new Employee();
-            empl.Name = "Tomasz";
-            empl.Surname = "Dudkowski";
-            empl.EmailAddress = "tomaszszd@gmail.com";
-            empl.PhoneNumber = "+48601775210";
-            empl.DayOfBirthday = DateTime.Now;
+            Employee empl1 = new Employee();
+            empl1.Name = "Tomasz";
+            empl1.Surname = "Dudkowski";
+            empl1.EmailAddress = "tomaszszd@gmail.com";
+            empl1.PhoneNumber = "+48601775210";
+            empl1.DayOfBirthday = DateTime.Now;
+
+            Employee empl2 = new Employee();
+            empl2.Name = "Jan";
+            empl2.Surname = "Kowalski";
+            empl2.EmailAddress = "jan_kowalski@gmail.com";
+            empl2.PhoneNumber = "+48734847319";
+            empl2.DayOfBirthday = DateTime.Now;
 
             Department dept = new Department();
             dept.Name = "IT";
 
-            empl.Department = dept;
+            empl1.Department = dept;
+            empl2.Department = dept;
 
             Zadanie zadanie = new Zadanie();
             zadanie.Title = "Program ASP.NET Core";
@@ -169,8 +224,14 @@ namespace ToDoListCore.Controllers
 
             EmpInTask eit = new EmpInTask();
             eit.Zadanie = zadanie;
-            eit.Employee = empl;
+            eit.Employee = empl1;
+
+            EmpInTask eit2 = new EmpInTask();
+            eit2.Zadanie = zadanie;
+            eit2.Employee = empl2;
+
             _context.ZadaniaInTasks.Add(eit);
+            _context.ZadaniaInTasks.Add(eit2);
             _context.SaveChanges();
         }
 

@@ -5,6 +5,51 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200722171556_CreateManyToManyEmpTaskDep.cs" />
+    <Compile Remove="Migrations\20200722171556_CreateManyToManyEmpTaskDep.Designer.cs" />
+    <Compile Remove="Migrations\20200724184307_CreateManyToManyEmpTaskDep.cs" />
+    <Compile Remove="Migrations\20200724184307_CreateManyToManyEmpTaskDep.Designer.cs" />
+    <Compile Remove="Migrations\20200724185757_CreateManyToManyEmpTaskDep.cs" />
+    <Compile Remove="Migrations\20200724185757_CreateManyToManyEmpTaskDep.Designer.cs" />
+    <Compile Remove="Migrations\20200724190055_CreateManyToManyEmpTaskDep.cs" />
+    <Compile Remove="Migrations\20200724190055_CreateManyToManyEmpTaskDep.Designer.cs" />
+    <Compile Remove="Migrations\20200724190243_CreateManyToManyEmpTaskDep.cs" />
+    <Compile Remove="Migrations\20200724190243_CreateManyToManyEmpTaskDep.Designer.cs" />
+    <Compile Remove="Migrations\20200724190518_CreateManyToManyEmpTaskDep.cs" />
+    <Compile Remove="Migrations\20200724190518_CreateManyToManyEmpTaskDep.Designer.cs" />
+    <Compile Remove="Migrations\20200724190728_CreateManyToManyEmpTaskDep.cs" />
+    <Compile Remove="Migrations\20200724190728_CreateManyToManyEmpTaskDep.Designer.cs" />
+    <Compile Remove="Migrations\20200724192232_CreateManyToManyEmpTaskDep.cs" />
+    <Compile Remove="Migrations\20200724192232_CreateManyToManyEmpTaskDep.Designer.cs" />
+    <Compile Remove="Migrations\20200724192828_CreateManyToManyEmpTaskDep.cs" />
+    <Compile Remove="Migrations\20200724192828_CreateManyToManyEmpTaskDep.Designer.cs" />
+    <Compile Remove="Migrations\20200724193031_CreateManyToManyEmpTaskDep.cs" />
+    <Compile Remove="Migrations\20200724193031_CreateManyToManyEmpTaskDep.Designer.cs" />
+    <Compile Remove="Migrations\20200724193224_CreateManyToManyEmpTaskDep.cs" />
+    <Compile Remove="Migrations\20200724193224_CreateManyToManyEmpTaskDep.Designer.cs" />
+    <Compile Remove="Migrations\20200724195137_CreateManyTomanyEmpTaskDep.cs" />
+    <Compile Remove="Migrations\20200724195137_CreateManyTomanyEmpTaskDep.Designer.cs" />
+    <Compile Remove="Migrations\20200724195554_CreateManyTomanyEmpTaskDep.cs" />
+    <Compile Remove="Migrations\20200724195554_CreateManyTomanyEmpTaskDep.Designer.cs" />
+    <Compile Remove="Migrations\20200724195805_CreateManyTomanyEmpTaskDep.cs" />
+    <Compile Remove="Migrations\20200724195805_CreateManyTomanyEmpTaskDep.Designer.cs" />
+    <Compile Remove="Migrations\20200724200002_CreateManyTomanyEmpTaskDep.cs" />
+    <Compile Remove="Migrations\20200724200002_CreateManyTomanyEmpTaskDep.Designer.cs" />
+    <Compile Remove="Migrations\20200724200359_CreateManyTomanyEmpTaskDep.cs" />
+    <Compile Remove="Migrations\20200724200359_CreateManyTomanyEmpTaskDep.Designer.cs" />
+    <Compile Remove="Migrations\20200724201648_CreateManyTomanyEmpTaskDep.cs" />
+    <Compile Remove="Migrations\20200724201648_CreateManyTomanyEmpTaskDep.Designer.cs" />
+    <Compile Remove="Migrations\20200724202347_CreateManyTomanyEmpTaskDep.cs" />
+    <Compile Remove="Migrations\20200724202347_CreateManyTomanyEmpTaskDep.Designer.cs" />
+    <Compile Remove="Migrations\20200724202920_CreateManyTomanyEmpTaskDep.cs" />
+    <Compile Remove="Migrations\20200724202920_CreateManyTomanyEmpTaskDep.Designer.cs" />
+    <Compile Remove="Migrations\20200724203919_CreateManyTomanyEmpTaskDep.cs" />
+    <Compile Remove="Migrations\20200724203919_CreateManyTomanyEmpTaskDep.Designer.cs" />
+    <Compile Remove="Migrations\20200724204715_CreateManyTomanyEmpTaskDep.cs" />
+    <Compile Remove="Migrations\20200724204715_CreateManyTomanyEmpTaskDep.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.6">
