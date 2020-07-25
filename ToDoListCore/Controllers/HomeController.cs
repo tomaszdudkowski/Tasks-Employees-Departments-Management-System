@@ -68,7 +68,7 @@ namespace ToDoListCore.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddTask([Bind("ID, StartTime, EndTime, Title, Description, IsEnd, EmployeesList")] TaskWithEmpsList taskEmp)
+        public IActionResult AddTask([Bind("ID, StartDate, StartTime, EndDate, EndTime, Title, Description, IsEnd, EmployeesList")] TaskWithEmpsList taskEmp)
         {
             taskEmp.IsEnd = false;
             EmpInTask eit;
@@ -77,7 +77,9 @@ namespace ToDoListCore.Controllers
 
             task.ID = taskEmp.ID;
             task.StartTime = taskEmp.StartTime;
+            task.StartDate = taskEmp.StartDate;
             task.EndTime = taskEmp.EndTime;
+            task.EndDate = taskEmp.EndDate;
             task.Title = taskEmp.Title;
             task.Description = taskEmp.Description;
             task.IsEnd = taskEmp.IsEnd;
@@ -96,6 +98,7 @@ namespace ToDoListCore.Controllers
                 eit = new EmpInTask();
                 eit.Zadanie = task;
                 // Nie dodawać pracownika do relacji jako obiekt tylko dodawać jako ID :)
+                // Gdy pracownik już istnieje, a nie jest dodawany razem z zadaniem.
                 // Wtedy działa...
                 //eit.Employee = empl;
                 eit.EmployeeID = empl.EmployeeID;
@@ -123,6 +126,8 @@ namespace ToDoListCore.Controllers
             twel.ID = task.ID;
             twel.StartTime = task.StartTime;
             twel.EndTime = task.EndTime;
+            twel.StartDate = task.StartDate;
+            twel.EndDate = task.EndDate;
             twel.Title = task.Title;
             twel.Description = task.Description;
             twel.EmployeesList = new List<Employee>();
@@ -137,12 +142,51 @@ namespace ToDoListCore.Controllers
         public IActionResult EditTask(int id)
         {
             Zadanie task = _context.Zadania.Find(id);
+            TaskWithEmpsList twel = new TaskWithEmpsList();
+            twel.ID = task.ID;
+            twel.StartDate = task.StartDate;
+
             return View(task);
         }
 
         [HttpPost]
-        public IActionResult EditTask(int id, [Bind("ID, StartTime, EndTime, Title, Description, IsEnd")] Zadanie task)
+        public IActionResult EditTask(int id, [Bind("ID, StartTime, EndTime, StartDate, EndDate, Title, Description, IsEnd")] TaskWithEmpsList taskEmp)
         {
+            taskEmp.IsEnd = false;
+            EmpInTask eit;
+            Zadanie task = new Zadanie();
+            Employee empl;
+
+            task.ID = taskEmp.ID;
+            task.StartTime = taskEmp.StartTime;
+            task.StartDate = taskEmp.StartDate;
+            task.EndTime = taskEmp.EndTime;
+            task.EndDate = taskEmp.EndDate;
+            task.Title = taskEmp.Title;
+            task.Description = taskEmp.Description;
+            task.IsEnd = taskEmp.IsEnd;
+
+            foreach (var emp in taskEmp.EmployeesList.Where(e => e.checkBoxEmp == true))
+            {
+                empl = new Employee();
+                empl.EmployeeID = emp.EmployeeID;
+                empl.Name = emp.Name;
+                empl.Surname = emp.Surname;
+                empl.DayOfBirthday = emp.DayOfBirthday;
+                empl.EmailAddress = emp.EmailAddress;
+                empl.PhoneNumber = emp.PhoneNumber;
+                empl.DeptID = emp.DeptID;
+
+                eit = new EmpInTask();
+                eit.Zadanie = task;
+                // Nie dodawać pracownika do relacji jako obiekt tylko dodawać jako ID :)
+                // Gdy pracownik już istnieje, a nie jest dodawany razem z zadaniem.
+                // Wtedy działa...
+                //eit.Employee = empl;
+                /*eit.EmployeeID = empl.EmployeeID;
+                _context.ZadaniaInTasks.Add(eit);*/
+            }
+
             if (id != task.ID)
             {
                 return Content("ID jest nie prawidłowe.");
@@ -191,48 +235,6 @@ namespace ToDoListCore.Controllers
             _context.Update(task);
             _context.SaveChanges();
             return RedirectToAction(nameof(Main));
-        }
-
-        public void DodajTemp()
-        {
-            Employee empl1 = new Employee();
-            empl1.Name = "Tomasz";
-            empl1.Surname = "Dudkowski";
-            empl1.EmailAddress = "tomaszszd@gmail.com";
-            empl1.PhoneNumber = "+48601775210";
-            empl1.DayOfBirthday = DateTime.Now;
-
-            Employee empl2 = new Employee();
-            empl2.Name = "Jan";
-            empl2.Surname = "Kowalski";
-            empl2.EmailAddress = "jan_kowalski@gmail.com";
-            empl2.PhoneNumber = "+48734847319";
-            empl2.DayOfBirthday = DateTime.Now;
-
-            Department dept = new Department();
-            dept.Name = "IT";
-
-            empl1.Department = dept;
-            empl2.Department = dept;
-
-            Zadanie zadanie = new Zadanie();
-            zadanie.Title = "Program ASP.NET Core";
-            zadanie.Description = "ABCD";
-            zadanie.StartTime = DateTime.Now;
-            zadanie.EndTime = DateTime.Now;
-            zadanie.IsEnd = false;
-
-            EmpInTask eit = new EmpInTask();
-            eit.Zadanie = zadanie;
-            eit.Employee = empl1;
-
-            EmpInTask eit2 = new EmpInTask();
-            eit2.Zadanie = zadanie;
-            eit2.Employee = empl2;
-
-            _context.ZadaniaInTasks.Add(eit);
-            _context.ZadaniaInTasks.Add(eit2);
-            _context.SaveChanges();
         }
 
         private bool TaskExist(int id)

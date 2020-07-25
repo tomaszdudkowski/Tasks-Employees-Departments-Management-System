@@ -22,8 +22,6 @@ namespace ToDoListCore.ViewModels
         [Required(ErrorMessage = "Proszę wprowadzić nazwisko pracownika.")]
         public string EmplSurname { get; set; }
         [Required(ErrorMessage = "Proszę wprowadzić datę urodzenia pracownika.")]
-        [DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{dd-MM-yyyy}")]
         public DateTime DayOfBirthday { get; set; }
         [Required(ErrorMessage = "Proszę wprowadzić adres e-mail pracownika.")]
         [EmailAddress]

@@ -18,10 +18,9 @@
                 {
                     <tr>
                         <td><a asp-action="EndTask" asp-route-id="@t.ID" class="btn btn-success btn-sm">Zakończ zadanie</a></td>
-                        <td>@t.StartTime</td>
-                        <td>@t.EndTime</td>
+                        <td>@t.StartDate.ToString("dd-MM-yyyy") @t.StartTime.ToString("HH:mm")</td>
+                        <td>@t.EndDate.ToString("dd-MM-yyyy") @t.EndTime.ToString("HH:mm")</td>
                         <td>@t.Title</td>
-                        <td>@t.IsEnd</td>
                         <td><a asp-action="DetailTask" asp-route-id="@t.ID" class="btn btn-secondary btn-sm">Szczegóły</a> | <a asp-action="EditTask" asp-route-id="@t.ID" class="btn btn-secondary btn-sm">Edytuj</a> | <a asp-action="DeleteTask" asp-route-id="@t.ID" class="btn btn-secondary btn-sm">Usuń</a></td>
                     </tr>
                 }

@@ -16,14 +16,11 @@ namespace ToDoListCore.Models
         [Required(ErrorMessage = "Proszę wprowadzić nazwisko pracownika.")]
         public string Surname { get; set; }
         [Required(ErrorMessage = "Proszę wprowadzić datę urodzenia pracownika.")]
-        [DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{dd-MM-yyyy hh:mm}")]
         public DateTime DayOfBirthday { get; set; }
         [Required(ErrorMessage = "Proszę wprowadzić adres e-mail pracownika.")]
         [EmailAddress]
         public string EmailAddress { get; set; }
         [Required(ErrorMessage = "Proszę wprowadzić numer telefonu pracownika.")]
-        [RegularExpression("^(\\+[0 - 9]{11})$")]
         [Phone]
         public string PhoneNumber { get; set; }
 

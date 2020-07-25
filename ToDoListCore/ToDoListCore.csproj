@@ -5,6 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200720130629_CreateZadaniaEntityDB.cs" />
+    <Compile Remove="Migrations\20200720130629_CreateZadaniaEntityDB.Designer.cs" />
     <Compile Remove="Migrations\20200722171556_CreateManyToManyEmpTaskDep.cs" />
     <Compile Remove="Migrations\20200722171556_CreateManyToManyEmpTaskDep.Designer.cs" />
     <Compile Remove="Migrations\20200724184307_CreateManyToManyEmpTaskDep.cs" />
@@ -47,6 +49,22 @@
     <Compile Remove="Migrations\20200724203919_CreateManyTomanyEmpTaskDep.Designer.cs" />
     <Compile Remove="Migrations\20200724204715_CreateManyTomanyEmpTaskDep.cs" />
     <Compile Remove="Migrations\20200724204715_CreateManyTomanyEmpTaskDep.Designer.cs" />
+    <Compile Remove="Migrations\20200724211720_CreateManyTomanyEmpTaskDep.cs" />
+    <Compile Remove="Migrations\20200724211720_CreateManyTomanyEmpTaskDep.Designer.cs" />
+    <Compile Remove="Migrations\20200725132148_CreateManyToManyEmpTaskDep.cs" />
+    <Compile Remove="Migrations\20200725132148_CreateManyToManyEmpTaskDep.Designer.cs" />
+    <Compile Remove="Migrations\20200725141237_CreateManyToManyEmpTaskDep.cs" />
+    <Compile Remove="Migrations\20200725141237_CreateManyToManyEmpTaskDep.Designer.cs" />
+    <Compile Remove="Migrations\20200725141529_CreateManyToManyEmpTaskDep.cs" />
+    <Compile Remove="Migrations\20200725141529_CreateManyToManyEmpTaskDep.Designer.cs" />
+    <Compile Remove="Migrations\20200725142525_CreateManyToManyEmpTaskDep.cs" />
+    <Compile Remove="Migrations\20200725142525_CreateManyToManyEmpTaskDep.Designer.cs" />
+    <Compile Remove="Migrations\20200725171501_CreateManyToManyEmpTaskDep.cs" />
+    <Compile Remove="Migrations\20200725171501_CreateManyToManyEmpTaskDep.Designer.cs" />
+    <Compile Remove="Migrations\20200725174339_CreateManyToManyEmpTaskDep.cs" />
+    <Compile Remove="Migrations\20200725174339_CreateManyToManyEmpTaskDep.Designer.cs" />
+    <Compile Remove="Migrations\20200725174813_CreateManyToManyEmpTaskDep.cs" />
+    <Compile Remove="Migrations\20200725174813_CreateManyToManyEmpTaskDep.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

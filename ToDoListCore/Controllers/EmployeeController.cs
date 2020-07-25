@@ -96,19 +96,15 @@ namespace ToDoListCore.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditEmployee(int id, [Bind("EmployeeID, Name, Surname, DayOfBirthday, EmailAddress, PhoneNumber, DeptID")] Employee employee)
+        public IActionResult EditEmployee(int id, [Bind("EmployeeID, Name, Surname, DayOfBirthday, EmailAddress, PhoneNumber, DeptID, checkBoxEmp, Zadania, Department")] Employee employee)
         {
             if (id != employee.EmployeeID)
             {
                 return Content("ID jest nie prawidłowe.");
             }
-            if(!ModelState.IsValid)
-            {
-                return Content("ModelState is NOT VALID !");
-            }
+
             if (ModelState.IsValid)
             {
-                Debug.WriteLine("Przeszło walidację");
                 try
                 {
                     _context.Employees.Update(employee);
@@ -116,7 +112,7 @@ namespace ToDoListCore.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EmployeeExist(employee.EmployeeID))
+                    if (!EmployeeExist(id))
                     {
                         return Content("Pracownik nie istnieje");
                     }

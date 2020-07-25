@@ -10,6 +10,9 @@
         <form asp-action="EditEmployee">
             <input type="hidden" asp-for="EmployeeID" />
             <input type="hidden" asp-for="DeptID" />
+            <input type="hidden" asp-for="checkBoxEmp" />
+            <input type="hidden" asp-for="Department" />
+            <input type="hidden" asp-for="Zadania" />
             <div class="form-group">
                 <label asp-for="Name">Imię pracownika: </label>
                 <input class="form-control" asp-for="Name" />
@@ -20,7 +23,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="DayOfBirthday">Data urodzenia pracownika: </label>
-                <input class="form-control" asp-for="DayOfBirthday" />
+                <input class="form-control" type="date" asp-for="DayOfBirthday" />
             </div>
             <div class="form-group">
                 <label asp-for="EmailAddress">Adres E-Mail pracownika: </label>

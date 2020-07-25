@@ -12,11 +12,15 @@ namespace ToDoListCore.Models
         public int ID { get; set; }
         [Required(ErrorMessage = "Proszę wprowadzić datę rozpoczęcia zadania.")]
         [DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{dd-MM-yyyy hh:mm}")]
+        public DateTime StartDate { get; set; }
+        [Required(ErrorMessage = "Proszę wprowadzić godzinę rozpoczęcia zadania.")]
+        [DataType(DataType.DateTime)]
         public DateTime StartTime { get; set; }
         [Required(ErrorMessage = "Proszę wprowadzić datę zakończenia zadania.")]
         [DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{dd-MM-yyyy hh:mm}")]
+        public DateTime EndDate { get; set; }
+        [Required(ErrorMessage = "Proszę wprowadzić godzinę zakończenia zadania.")]
+        [DataType(DataType.DateTime)]
         public DateTime EndTime { get; set; }
         [Required(ErrorMessage = "Proszę wprowadzić tytuł zadania.")]
         public string Title { get; set; }

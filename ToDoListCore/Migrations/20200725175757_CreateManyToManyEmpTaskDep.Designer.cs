@@ -10,8 +10,8 @@ using ToDoListCore.DAL;
 namespace ToDoListCore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200724211720_CreateManyTomanyEmpTaskDep")]
-    partial class CreateManyTomanyEmpTaskDep
+    [Migration("20200725175757_CreateManyToManyEmpTaskDep")]
+    partial class CreateManyToManyEmpTaskDep
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -99,11 +99,17 @@ namespace ToDoListCore.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsEnd")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");

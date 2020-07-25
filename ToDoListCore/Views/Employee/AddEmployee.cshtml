@@ -7,7 +7,7 @@
 
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="AddEmployee" method="post">
+        <form asp-action="AddEmployee">
             <div class="form-group">
                 <label asp-for="Name">Imię pracownika: </label>
                 <input class="form-control" asp-for="Name" />
@@ -18,7 +18,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="DayOfBirthday">Data urodzenia pracownika: </label>
-                <input class="form-control" asp-for="DayOfBirthday" />
+                <input type="date" class="form-control" asp-for="DayOfBirthday" />
             </div>
             <div class="form-group">
                 <label asp-for="EmailAddress">Adres E-Mail pracownika: </label>
