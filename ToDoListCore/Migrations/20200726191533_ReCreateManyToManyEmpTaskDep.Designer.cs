@@ -10,8 +10,8 @@ using ToDoListCore.DAL;
 namespace ToDoListCore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200725175757_CreateManyToManyEmpTaskDep")]
-    partial class CreateManyToManyEmpTaskDep
+    [Migration("20200726191533_ReCreateManyToManyEmpTaskDep")]
+    partial class ReCreateManyToManyEmpTaskDep
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,6 +27,9 @@ namespace ToDoListCore.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()

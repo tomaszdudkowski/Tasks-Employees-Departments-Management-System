@@ -1,0 +1,35 @@
+﻿@model IEnumerable<ToDoListCore.Models.Department>
+
+@{
+    ViewData["Title"] = "Zarządzanie działami firmy";
+}
+
+<h1>Zarządzanie działami firmy</h1>
+
+<a asp-action="AddDepartment" class="btn btn-primary" style="margin-top: 15px; margin-bottom: 15px;">Dodaj nowy dział</a>
+
+<div>
+    <table class="table table-dark">
+        <thead class="tab">
+            <tr>
+                <th>ID</th>
+                <th>Nazwa działu</th>
+                <th>Opis działu</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Department d in Model)
+            {
+                <tr>
+                    <td>@d.DepartmentID</td>
+                    <td>@d.Name</td>
+                    <td>@d.Description</td>
+                    <td><a asp-action="DetailDepartment" asp-route-id="@d.DepartmentID" class="btn btn-secondary btn-sm">Szczegóły</a> | <a asp-action="EditDepartment" asp-route-id="@d.DepartmentID" class="btn btn-secondary btn-sm">Edytuj</a> | <a asp-action="DeleteDepartment" asp-route-id="@d.DepartmentID" class="btn btn-secondary btn-sm">Usuń</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+

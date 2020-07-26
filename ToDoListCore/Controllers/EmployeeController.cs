@@ -60,6 +60,8 @@ namespace ToDoListCore.Controllers
         [HttpPost]
         public IActionResult AddEmployee([Bind("EmployeeID, Name, Surname, DayOfBirthday, EmailAddress, PhoneNumber")] Employee employee)
         {
+            // Dodać obsługę działu firmy
+
             Department dept = new Department();
             dept.Name = "IT";
             employee.Department = dept;
