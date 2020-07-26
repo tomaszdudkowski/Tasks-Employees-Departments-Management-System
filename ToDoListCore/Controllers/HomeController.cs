@@ -142,15 +142,36 @@ namespace ToDoListCore.Controllers
         public IActionResult EditTask(int id)
         {
             Zadanie task = _context.Zadania.Find(id);
+            List<EmpInTask> eitList = _context.ZadaniaInTasks.Where(f => f.ZadanieID == id).ToList();
             TaskWithEmpsList twel = new TaskWithEmpsList();
+            List<Employee> empList = _context.Employees.ToList();
+
+            foreach (var empInTask in eitList)
+            {
+                foreach (var emp in empList)
+                {
+                    if(empInTask.EmployeeID == emp.EmployeeID)
+                    {
+                        emp.checkBoxEmp = true;
+                    }
+                }
+            }
+
             twel.ID = task.ID;
             twel.StartDate = task.StartDate;
+            twel.StartTime = task.StartTime;
+            twel.EndDate = task.EndDate;
+            twel.EndTime = task.EndTime;
+            twel.Title = task.Title;
+            twel.Description = task.Description;
+            twel.IsEnd = task.IsEnd;
+            twel.EmployeesList = empList;
 
-            return View(task);
+            return View(twel);
         }
 
         [HttpPost]
-        public IActionResult EditTask(int id, [Bind("ID, StartTime, EndTime, StartDate, EndDate, Title, Description, IsEnd")] TaskWithEmpsList taskEmp)
+        public IActionResult EditTask(int id, [Bind("ID, StartDate, StartTime, EndDate, EndTime, Title, Description, IsEnd, EmployeesList")] TaskWithEmpsList taskEmp)
         {
             taskEmp.IsEnd = false;
             EmpInTask eit;

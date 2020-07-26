@@ -32,24 +32,7 @@
                 <label asp-for="Description">Opis zadania: </label>
                 <input class="form-control" asp-for="Description" />
             </div>
-            <div>
-                <ul>
-                    @for (var i = 0; i < Model.EmployeesList.Count; i++)
-                    {
-                        <li>
-                            <input type="checkbox" asp-for="@Model.EmployeesList[i].checkBoxEmp" />
-                            <label asp-for="@Model.EmployeesList[i].checkBoxEmp">@Model.EmployeesList[i].Name @Model.EmployeesList[i].Surname </label>
-                            <input type="hidden" asp-for="@Model.EmployeesList[i].EmployeeID" />
-                            <input type="hidden" asp-for="@Model.EmployeesList[i].Name" />
-                            <input type="hidden" asp-for="@Model.EmployeesList[i].Surname" />
-                            <input type="hidden" asp-for="@Model.EmployeesList[i].DayOfBirthday" />
-                            <input type="hidden" asp-for="@Model.EmployeesList[i].EmailAddress" />
-                            <input type="hidden" asp-for="@Model.EmployeesList[i].PhoneNumber" />
-                            <input type="hidden" asp-for="@Model.EmployeesList[i].DeptID" />
-                        </li>
-                    }
-                </ul>
-            </div>
+            @Html.Partial("EmployeesListPartialView")
             <button class="btn btn-primary" type="submit">Dodaj zadanie</button>
         </form>
     </div>

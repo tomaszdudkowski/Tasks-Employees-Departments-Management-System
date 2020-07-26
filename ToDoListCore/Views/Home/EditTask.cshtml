@@ -1,4 +1,4 @@
-﻿@model TaskWithEmpsList
+﻿@model ToDoListCore.ViewModels.TaskWithEmpsList
 @{
     ViewData["Title"] = "EditTask";
 }
@@ -34,6 +34,7 @@
                 <label asp-for="Description">Opis zadania: </label>
                 <input class="form-control" asp-for="Description" />
             </div>
+            @Html.Partial("EmployeesListPartialView")
             <button class="btn btn-primary" type="submit" action="EditTask">Aktualizuj zadanie</button>
             <a asp-action="Main">Powrót do listy zadań</a>
         </form>

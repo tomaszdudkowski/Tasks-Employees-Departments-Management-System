@@ -1,0 +1,23 @@
+﻿@model ToDoListCore.ViewModels.TaskWithEmpsList
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<div>
+    <ul>
+        @for (var i = 0; i < Model.EmployeesList.Count; i++)
+        {
+            <li>
+                <input type="checkbox" asp-for="@Model.EmployeesList[i].checkBoxEmp" />
+                <label asp-for="@Model.EmployeesList[i].checkBoxEmp">@Model.EmployeesList[i].Name @Model.EmployeesList[i].Surname </label>
+                <input type="hidden" asp-for="@Model.EmployeesList[i].EmployeeID" />
+                <input type="hidden" asp-for="@Model.EmployeesList[i].Name" />
+                <input type="hidden" asp-for="@Model.EmployeesList[i].Surname" />
+                <input type="hidden" asp-for="@Model.EmployeesList[i].DayOfBirthday" />
+                <input type="hidden" asp-for="@Model.EmployeesList[i].EmailAddress" />
+                <input type="hidden" asp-for="@Model.EmployeesList[i].PhoneNumber" />
+                <input type="hidden" asp-for="@Model.EmployeesList[i].DeptID" />
+            </li>
+        }
+    </ul>
+</div>
