@@ -64,6 +64,10 @@ namespace ToDoListCore.Controllers
             var empl = _context.Employees.ToList();
             TaskWithEmpsList twel = new TaskWithEmpsList();
             twel.EmployeesList = empl;
+            twel.StartDate = DateTime.Now;
+            twel.StartTime = DateTime.Now;
+            twel.EndDate = DateTime.Now;
+            twel.EndTime = DateTime.Now;
             return View(twel);
         }
 
@@ -199,13 +203,29 @@ namespace ToDoListCore.Controllers
                 empl.DeptID = emp.DeptID;
 
                 eit = new EmpInTask();
-                eit.Zadanie = task;
+                eit.ZadanieID = task.ID;
                 // Nie dodawać pracownika do relacji jako obiekt tylko dodawać jako ID :)
                 // Gdy pracownik już istnieje, a nie jest dodawany razem z zadaniem.
                 // Wtedy działa...
                 //eit.Employee = empl;
-                /*eit.EmployeeID = empl.EmployeeID;
-                _context.ZadaniaInTasks.Add(eit);*/
+                eit.EmployeeID = empl.EmployeeID;
+                if(TaskEmp(eit.EmployeeID, eit.ZadanieID) == false)
+                {
+                    _context.ZadaniaInTasks.Add(eit);
+                    _context.SaveChanges();
+                }
+            }
+
+            foreach (var emp in taskEmp.EmployeesList.Where(e => e.checkBoxEmp == false))
+            {
+                eit = new EmpInTask();
+                eit.ZadanieID = task.ID;
+                eit.EmployeeID = emp.EmployeeID;
+                if(TaskEmp(eit.EmployeeID, eit.ZadanieID) == true)
+                {
+                    _context.ZadaniaInTasks.Remove(eit);
+                    _context.SaveChanges();
+                }
             }
 
             if (id != task.ID)
@@ -261,6 +281,11 @@ namespace ToDoListCore.Controllers
         private bool TaskExist(int id)
         {
             return _context.Zadania.Any(t => t.ID == id);
+        }
+
+        private bool TaskEmp(int EmplID, int TaskID)
+        {
+            return _context.ZadaniaInTasks.Any(t => t.EmployeeID == EmplID && t.ZadanieID == TaskID);
         }
     }
 }

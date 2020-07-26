@@ -4,10 +4,10 @@
 *@
 
 <div>
-    <ul>
+    <ul class="list-group-flush">
         @for (var i = 0; i < Model.EmployeesList.Count; i++)
         {
-            <li>
+            <li class="list-group-item">
                 <input type="checkbox" asp-for="@Model.EmployeesList[i].checkBoxEmp" />
                 <label asp-for="@Model.EmployeesList[i].checkBoxEmp">@Model.EmployeesList[i].Name @Model.EmployeesList[i].Surname </label>
                 <input type="hidden" asp-for="@Model.EmployeesList[i].EmployeeID" />
