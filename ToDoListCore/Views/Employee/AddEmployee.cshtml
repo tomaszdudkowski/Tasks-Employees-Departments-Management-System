@@ -1,4 +1,4 @@
-﻿@model Employee
+﻿@model ToDoListCore.ViewModels.EmployeeDepartment
 @{
     ViewData["Title"] = "Dodaj nowego pracownika";
 }
@@ -9,12 +9,12 @@
     <div class="col-md-4">
         <form asp-action="AddEmployee">
             <div class="form-group">
-                <label asp-for="Name">Imię pracownika: </label>
-                <input class="form-control" asp-for="Name" />
+                <label asp-for="EmplName">Imię pracownika: </label>
+                <input class="form-control" asp-for="EmplName" />
             </div>
             <div class="form-group">
-                <label asp-for="Surname">Nazwisko pracownika </label>
-                <input class="form-control" asp-for="Surname" />
+                <label asp-for="EmplSurname">Nazwisko pracownika </label>
+                <input class="form-control" asp-for="EmplSurname" />
             </div>
             <div class="form-group">
                 <label asp-for="DayOfBirthday">Data urodzenia pracownika: </label>
@@ -27,6 +27,9 @@
             <div class="form-group">
                 <label asp-for="PhoneNumber">Numer telefonu pracownika: </label>
                 <input class="form-control" asp-for="PhoneNumber" />
+            </div>
+            <div>
+                <select asp-for="DepartmentID" asp-items="@(new SelectList(ViewBag.ListOfDepartments, "DepartmentID", "DeptName"))"></select>
             </div>
             <button class="btn btn-primary" type="submit">Dodaj nowego pracownika</button>
         </form>

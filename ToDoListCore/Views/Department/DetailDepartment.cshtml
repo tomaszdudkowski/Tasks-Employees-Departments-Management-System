@@ -1,0 +1,18 @@
+﻿@model Department
+@{
+    ViewData["Title"] = "DetailDepartment";
+}
+
+<h1>Szczegóły działu firmy</h1>
+
+<div>
+    <p>ID działu: @Model.DepartmentID</p>
+    <p>Nazwa działu: @Model.Name</p>
+    <p>Opis działu: @Model.Description</p>
+
+    @foreach(Employee e in Model.Employees)
+    {
+        <p>@e.Name @e.Surname</p>
+    }
+</div>
+

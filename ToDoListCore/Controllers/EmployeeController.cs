@@ -54,17 +54,28 @@ namespace ToDoListCore.Controllers
         [HttpGet]
         public ViewResult AddEmployee()
         {
+
+            // Zmienić nazwy zmiennych
+            List<Department> departments = new List<Department>();
+            departments = _context.Departments.ToList();
+            List<EmployeeDepartment> departments1 = new List<EmployeeDepartment>();
+            foreach (var item in departments)
+            {
+                EmployeeDepartment ed = new EmployeeDepartment();
+                ed.DepartmentID = item.DepartmentID;
+                ed.DeptName = item.Name;
+                departments1.Add(ed);
+            }
+            ViewBag.ListOfDepartments = departments1;
             return View();
         }
 
         [HttpPost]
-        public IActionResult AddEmployee([Bind("EmployeeID, Name, Surname, DayOfBirthday, EmailAddress, PhoneNumber")] Employee employee)
+        public IActionResult AddEmployee([Bind("EmployeeID, Name, Surname, DayOfBirthday, EmailAddress, PhoneNumber, Department")] EmployeeDepartment employeeDep)
         {
             // Dodać obsługę działu firmy
-
-            Department dept = new Department();
-            dept.Name = "IT";
-            employee.Department = dept;
+            Employee employee = new Employee();
+            employee.EmployeeID = employeeDep.EmployeeID;
             _context.Add(employee);
             _context.SaveChanges();
             return RedirectToAction("Main");

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ToDoListCore.DAL;
 using ToDoListCore.Models;
@@ -38,6 +39,23 @@ namespace ToDoListCore.Controllers
         public IActionResult AddDepartment([Bind("DepartmentID, Name, Description")] Department department)
         {
             _context.Departments.Add(department);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult DetailDepartment(int id)
+        {
+            var dep = _context.Departments.Include(e => e.Employees).Where(d => d.DepartmentID == id).FirstOrDefault();
+            
+            return View(dep);
+        }
+
+        [HttpGet]
+        public IActionResult DeleteDepartment(int id)
+        {
+            Department dept = _context.Departments.Find(id);
+            _context.Departments.Remove(dept);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
