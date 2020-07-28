@@ -54,28 +54,32 @@ namespace ToDoListCore.Controllers
         [HttpGet]
         public ViewResult AddEmployee()
         {
-
-            // Zmienić nazwy zmiennych
             List<Department> departments = new List<Department>();
             departments = _context.Departments.ToList();
-            List<EmployeeDepartment> departments1 = new List<EmployeeDepartment>();
+            List<EmployeeDepartment> departmentsEDVM = new List<EmployeeDepartment>();
+            EmployeeDepartment ed = new EmployeeDepartment();
             foreach (var item in departments)
             {
-                EmployeeDepartment ed = new EmployeeDepartment();
+                ed = new EmployeeDepartment();
                 ed.DepartmentID = item.DepartmentID;
                 ed.DeptName = item.Name;
-                departments1.Add(ed);
+                departmentsEDVM.Add(ed);
             }
-            ViewBag.ListOfDepartments = departments1;
-            return View();
+            ViewBag.ListOfDepartments = departmentsEDVM;
+            return View(ed);
         }
 
         [HttpPost]
-        public IActionResult AddEmployee([Bind("EmployeeID, Name, Surname, DayOfBirthday, EmailAddress, PhoneNumber, Department")] EmployeeDepartment employeeDep)
+        public IActionResult AddEmployee([Bind("EmployeeID, EmplName, EmplSurname, DayOfBirthday, EmailAddress, PhoneNumber, DepartmentID")] EmployeeDepartment employeeDep)
         {
-            // Dodać obsługę działu firmy
             Employee employee = new Employee();
             employee.EmployeeID = employeeDep.EmployeeID;
+            employee.DeptID = employeeDep.DepartmentID;
+            employee.Name = employeeDep.EmplName;
+            employee.Surname = employeeDep.EmplSurname;
+            employee.DayOfBirthday = employeeDep.DayOfBirthday;
+            employee.EmailAddress = employeeDep.EmailAddress;
+            employee.PhoneNumber = employeeDep.PhoneNumber;
             _context.Add(employee);
             _context.SaveChanges();
             return RedirectToAction("Main");
@@ -105,13 +109,52 @@ namespace ToDoListCore.Controllers
         public IActionResult EditEmployee(int id)
         {
             Employee emp = _context.Employees.Find(id);
-            return View(emp);
+            List<Department> departments = new List<Department>();
+            departments = _context.Departments.ToList();
+            List<EmployeeDepartment> departmentsEDVM = new List<EmployeeDepartment>();
+            EmployeeDepartment ed1 = new EmployeeDepartment();
+
+            ed1 = new EmployeeDepartment();
+            ed1.EmployeeID = emp.EmployeeID;
+            ed1.EmplName = emp.Name;
+            ed1.EmplSurname = emp.Surname;
+            ed1.EmailAddress = emp.EmailAddress;
+            ed1.PhoneNumber = emp.PhoneNumber;
+            ed1.DayOfBirthday = emp.DayOfBirthday;
+            ed1.DepartmentID = emp.DeptID;
+            ed1.DeptName = emp.Department.Name;
+            departmentsEDVM.Add(ed1);
+
+            foreach (var item in departments)
+            {
+                if(item.DepartmentID != emp.DeptID)
+                {
+                    ed1 = new EmployeeDepartment();
+                    ed1.DepartmentID = item.DepartmentID;
+                    ed1.DeptName = item.Name;
+                    departmentsEDVM.Add(ed1);
+                }
+            }
+
+            ViewBag.ListOfDepartments = departmentsEDVM;
+
+            return View(departmentsEDVM[0]);
         }
 
         [HttpPost]
-        public IActionResult EditEmployee(int id, [Bind("EmployeeID, Name, Surname, DayOfBirthday, EmailAddress, PhoneNumber, DeptID, checkBoxEmp, Zadania, Department")] Employee employee)
+        public IActionResult EditEmployee(int id, EmployeeDepartment employeeDep)
         {
-            if (id != employee.EmployeeID)
+            Employee employee = new Employee();
+            employee.EmployeeID = employeeDep.EmployeeID;
+            employee.Name = employeeDep.EmplName;
+            employee.Surname = employeeDep.EmplSurname;
+            employee.DayOfBirthday = employeeDep.DayOfBirthday;
+            employee.EmailAddress = employeeDep.EmailAddress;
+            employee.PhoneNumber = employeeDep.PhoneNumber;
+            employee.DeptID = employeeDep.DepartmentID;
+
+
+            if (id != employeeDep.EmployeeID)
             {
                 return Content("ID jest nie prawidłowe.");
             }
@@ -136,7 +179,7 @@ namespace ToDoListCore.Controllers
                 }
                 return RedirectToAction(nameof(Main));
             }
-            return View(employee);
+            return View(employeeDep);
         }
 
         [HttpGet]
