@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ToDoListCore.Migrations
 {
-    public partial class ReCreateManyToManyEmpTaskDep : Migration
+    public partial class Rebuild : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -51,7 +51,7 @@ namespace ToDoListCore.Migrations
                     DayOfBirthday = table.Column<DateTime>(nullable: false),
                     EmailAddress = table.Column<string>(nullable: false),
                     PhoneNumber = table.Column<string>(nullable: false),
-                    DeptID = table.Column<int>(nullable: false)
+                    DeptID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -61,7 +61,7 @@ namespace ToDoListCore.Migrations
                         column: x => x.DeptID,
                         principalTable: "Departments",
                         principalColumn: "DepartmentID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(

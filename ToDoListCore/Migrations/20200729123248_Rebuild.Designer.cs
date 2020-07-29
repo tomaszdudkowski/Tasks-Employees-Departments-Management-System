@@ -10,8 +10,8 @@ using ToDoListCore.DAL;
 namespace ToDoListCore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200726191533_ReCreateManyToManyEmpTaskDep")]
-    partial class ReCreateManyToManyEmpTaskDep
+    [Migration("20200729123248_Rebuild")]
+    partial class Rebuild
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -65,7 +65,7 @@ namespace ToDoListCore.Migrations
                     b.Property<DateTime>("DayOfBirthday")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("DeptID")
+                    b.Property<int?>("DeptID")
                         .HasColumnType("int");
 
                     b.Property<string>("EmailAddress")
@@ -146,8 +146,7 @@ namespace ToDoListCore.Migrations
                     b.HasOne("ToDoListCore.Models.Department", "Department")
                         .WithMany("Employees")
                         .HasForeignKey("DeptID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
                 });
 #pragma warning restore 612, 618
         }

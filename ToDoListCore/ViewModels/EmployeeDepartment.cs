@@ -11,7 +11,7 @@ namespace ToDoListCore.ViewModels
     {
         //Department
         [Required]
-        public int DepartmentID { get; set; }
+        public int? DepartmentID { get; set; }
         public string DeptName { get; set; }
 
         //Employee

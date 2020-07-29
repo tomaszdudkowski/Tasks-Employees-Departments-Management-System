@@ -43,7 +43,14 @@ namespace ToDoListCore.Controllers
                 ed.EmplSurname = item.Surname;
                 ed.EmailAddress = item.EmailAddress;
                 ed.PhoneNumber = item.PhoneNumber;
-                ed.DeptName = item.Department.Name;
+                if(item.Department == null)
+                {
+                    ed.DeptName = "";
+                } else
+                {
+                    ed.DeptName = item.Department.Name;
+                }
+                
 
                 employeeDepartmentsLists.Add(ed);
             }
@@ -96,7 +103,13 @@ namespace ToDoListCore.Controllers
             ewzl.EmailAddress = emp.EmailAddress;
             ewzl.PhoneNumber = emp.PhoneNumber;
             ewzl.DayOfBirthday = emp.DayOfBirthday;
-            ewzl.DeptName = emp.Department.Name;
+            if(emp.Department == null)
+            {
+                ewzl.DeptName = "";
+            } else
+            {
+                ewzl.DeptName = emp.Department.Name;
+            }
             ewzl.ZadaniaList = new List<Zadanie>();
             foreach (EmpInTask item in emp.Zadania)
             {
@@ -122,7 +135,13 @@ namespace ToDoListCore.Controllers
             ed1.PhoneNumber = emp.PhoneNumber;
             ed1.DayOfBirthday = emp.DayOfBirthday;
             ed1.DepartmentID = emp.DeptID;
-            ed1.DeptName = emp.Department.Name;
+            if(emp.Department == null)
+            {
+                ed1.DeptName = "";
+            } else
+            {
+                ed1.DeptName = emp.Department.Name;
+            }
             departmentsEDVM.Add(ed1);
 
             foreach (var item in departments)

@@ -69,6 +69,12 @@
     <Compile Remove="Migrations\20200725175757_CreateManyToManyEmpTaskDep.Designer.cs" />
     <Compile Remove="Migrations\20200726191019_ReCreateManyToManyEmpTaskDep.cs" />
     <Compile Remove="Migrations\20200726191019_ReCreateManyToManyEmpTaskDep.Designer.cs" />
+    <Compile Remove="Migrations\20200729114558_AddNullableDeptIDPropInEmplClass.cs" />
+    <Compile Remove="Migrations\20200729114558_AddNullableDeptIDPropInEmplClass.Designer.cs" />
+    <Compile Remove="Migrations\20200729123025_Rebuild.cs" />
+    <Compile Remove="Migrations\20200729123025_Rebuild.Designer.cs" />
+    <Compile Remove="Migrations\20200729123127_Rebuild.cs" />
+    <Compile Remove="Migrations\20200729123127_Rebuild.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -79,10 +85,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

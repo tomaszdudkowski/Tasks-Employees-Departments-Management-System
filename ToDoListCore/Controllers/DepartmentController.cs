@@ -55,6 +55,14 @@ namespace ToDoListCore.Controllers
         public IActionResult DeleteDepartment(int id)
         {
             Department dept = _context.Departments.Find(id);
+            var empl = _context.Employees.Where(e => e.DeptID == id);
+
+            foreach (var e in empl)
+            {
+                e.DeptID = null;
+                e.Department.Name = "";
+            }
+
             _context.Departments.Remove(dept);
             _context.SaveChanges();
             return RedirectToAction("Index");

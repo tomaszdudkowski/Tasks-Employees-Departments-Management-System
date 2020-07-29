@@ -30,7 +30,7 @@ namespace ToDoListCore.Models
         //Navigational Property
         public virtual ICollection<EmpInTask> Zadania { get; set; }
 
-        public int DeptID { get; set; }
+        public int? DeptID { get; set; }
         public Department Department { get; set; }
     }
 }

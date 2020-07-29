@@ -23,7 +23,8 @@ namespace ToDoListCore.DAL
             modelBuilder.Entity<Employee>()
                 .HasOne<Department>(e => e.Department)
                 .WithMany(d => d.Employees)
-                .HasForeignKey(e => e.DeptID);
+                .HasForeignKey(e => e.DeptID)
+                .OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder.Entity<EmpInTask>()
                 .HasKey(e => new { e.EmployeeID, e.ZadanieID });
