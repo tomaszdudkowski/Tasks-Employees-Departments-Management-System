@@ -13,13 +13,25 @@
 <div>Numer telefonu: @Model.PhoneNumber</div>
 <div>Dział: @Model.DeptName</div>
 
-<div>
-    <ul>
-        @foreach (Zadanie z in Model.ZadaniaList)
-        {
-            <li>@z.Title ---> @z.Description</li>
-        }
-    </ul>
+<div class="w-50">
+    <table class="table table-dark text-center table-sm">
+        <thead>
+            <tr>
+                <th>Tytuł zadania</th>
+                <th>Opis zadania</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Zadanie z in Model.ZadaniaList)
+            {
+                <tr>
+                    <td>@z.Title</td>
+                    <td> @z.Description</td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
 </div>
 
 <a asp-action="Main">Powrót do listy zadań</a>

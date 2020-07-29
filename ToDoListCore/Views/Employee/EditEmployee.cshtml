@@ -29,7 +29,7 @@
                 <label asp-for="PhoneNumber">Numer telefonu pracownika: </label>
                 <input class="form-control" asp-for="PhoneNumber" />
             </div>
-            <div>
+            <div style="margin-bottom:25px;">
                 <label asp-for="DepartmentID">Wybierz dział: </label>
                 <select class="form-control" asp-for="DepartmentID" asp-items="@(new SelectList(ViewBag.ListOfDepartments, "DepartmentID", "DeptName"))"></select>
             </div>

@@ -72,6 +72,7 @@ namespace ToDoListCore.Controllers
                 ed.DeptName = item.Name;
                 departmentsEDVM.Add(ed);
             }
+            ed.DayOfBirthday = DateTime.Now;
             ViewBag.ListOfDepartments = departmentsEDVM;
             return View(ed);
         }

@@ -22,7 +22,6 @@ namespace ToDoListCore.ViewModels
         [EmailAddress]
         public string EmailAddress { get; set; }
         [Required(ErrorMessage = "Proszę wprowadzić numer telefonu pracownika.")]
-        [RegularExpression("^(\\+[0 - 9]{11})$")]
         [Phone]
         public string PhoneNumber { get; set; }
 
