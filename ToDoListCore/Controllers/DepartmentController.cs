@@ -52,6 +52,49 @@ namespace ToDoListCore.Controllers
         }
 
         [HttpGet]
+        public IActionResult EditDepartment(int id)
+        {
+            var emp = _context.Departments.Find(id);
+            return View(emp);
+        }
+
+        [HttpPost]
+        public IActionResult EditDepartment(int id, Department department)
+        {
+            if (id != department.DepartmentID)
+            {
+                return Content("ID jest nie prawidłowe.");
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Departments.Update(department);
+                    _context.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!DepartmentExist(id))
+                    {
+                        return Content("Oddział firmy nie istnieje");
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(department);
+        }
+
+        private bool DepartmentExist(int id)
+        {
+            return _context.Departments.Any(d => d.DepartmentID == id);
+        }
+
+        [HttpGet]
         public IActionResult DeleteDepartment(int id)
         {
             Department dept = _context.Departments.Find(id);
