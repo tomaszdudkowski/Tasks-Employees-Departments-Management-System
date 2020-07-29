@@ -88,29 +88,33 @@ namespace ToDoListCore.Controllers
             task.Description = taskEmp.Description;
             task.IsEnd = taskEmp.IsEnd;
 
-            foreach (var emp in taskEmp.EmployeesList.Where(e => e.checkBoxEmp == true))
+            if(ModelState.IsValid)
             {
-                empl = new Employee();
-                empl.EmployeeID = emp.EmployeeID;
-                empl.Name = emp.Name;
-                empl.Surname = emp.Surname;
-                empl.DayOfBirthday = emp.DayOfBirthday;
-                empl.EmailAddress = emp.EmailAddress;
-                empl.PhoneNumber = emp.PhoneNumber;
-                empl.DeptID = emp.DeptID;
+                foreach (var emp in taskEmp.EmployeesList.Where(e => e.checkBoxEmp == true))
+                {
+                    empl = new Employee();
+                    empl.EmployeeID = emp.EmployeeID;
+                    empl.Name = emp.Name;
+                    empl.Surname = emp.Surname;
+                    empl.DayOfBirthday = emp.DayOfBirthday;
+                    empl.EmailAddress = emp.EmailAddress;
+                    empl.PhoneNumber = emp.PhoneNumber;
+                    empl.DeptID = emp.DeptID;
 
-                eit = new EmpInTask();
-                eit.Zadanie = task;
-                // Nie dodawać pracownika do relacji jako obiekt tylko dodawać jako ID :)
-                // Gdy pracownik już istnieje, a nie jest dodawany razem z zadaniem.
-                // Wtedy działa...
-                //eit.Employee = empl;
-                eit.EmployeeID = empl.EmployeeID;
-                _context.ZadaniaInTasks.Add(eit);
+                    eit = new EmpInTask();
+                    eit.Zadanie = task;
+                    // Nie dodawać pracownika do relacji jako obiekt tylko dodawać jako ID :)
+                    // Gdy pracownik już istnieje, a nie jest dodawany razem z zadaniem.
+                    // Wtedy działa...
+                    //eit.Employee = empl;
+                    eit.EmployeeID = empl.EmployeeID;
+                    _context.ZadaniaInTasks.Add(eit);
+                }
+                return RedirectToAction("Main");
             }
             _context.SaveChanges();
+            return View(taskEmp);
 
-            return RedirectToAction("Main");
         }
 
         [HttpGet]
@@ -154,7 +158,7 @@ namespace ToDoListCore.Controllers
             {
                 foreach (var emp in empList)
                 {
-                    if(empInTask.EmployeeID == emp.EmployeeID)
+                    if (empInTask.EmployeeID == emp.EmployeeID)
                     {
                         emp.checkBoxEmp = true;
                     }
@@ -209,7 +213,7 @@ namespace ToDoListCore.Controllers
                 // Wtedy działa...
                 //eit.Employee = empl;
                 eit.EmployeeID = empl.EmployeeID;
-                if(TaskEmp(eit.EmployeeID, eit.ZadanieID) == false)
+                if (TaskEmp(eit.EmployeeID, eit.ZadanieID) == false)
                 {
                     _context.ZadaniaInTasks.Add(eit);
                     _context.SaveChanges();
@@ -221,7 +225,7 @@ namespace ToDoListCore.Controllers
                 eit = new EmpInTask();
                 eit.ZadanieID = task.ID;
                 eit.EmployeeID = emp.EmployeeID;
-                if(TaskEmp(eit.EmployeeID, eit.ZadanieID) == true)
+                if (TaskEmp(eit.EmployeeID, eit.ZadanieID) == true)
                 {
                     _context.ZadaniaInTasks.Remove(eit);
                     _context.SaveChanges();

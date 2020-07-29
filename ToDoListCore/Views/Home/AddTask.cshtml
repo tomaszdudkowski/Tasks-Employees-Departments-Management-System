@@ -11,26 +11,32 @@
             <div class="form-group">
                 <label asp-for="StartTime">Wybierz datę rozpoczęcia zadania: </label>
                 <input class="form-control" type="date" asp-for="StartDate" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="StartTime">Wybierz godzinę rozpoczęcia zadania: </label>
                 <input class="form-control" type="time" asp-for="StartTime" />
+                <span asp-validation-for="StartTime" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="EndTime">Wybierz datę zakończenia zadania: </label>
                 <input class="form-control" type="date" asp-for="EndDate" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="EndTime">Wybierz godzinę zakończenia zadania: </label>
                 <input class="form-control" type="time" asp-for="EndTime" />
+                <span asp-validation-for="EndTime" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Title">Tytuł zadania: </label>
                 <input class="form-control" asp-for="Title" />
+                <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Description">Opis zadania: </label>
                 <input class="form-control" asp-for="Description" />
+                <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             @Html.Partial("EmployeesListPartialView")
             <button class="btn btn-primary" type="submit">Dodaj zadanie</button>

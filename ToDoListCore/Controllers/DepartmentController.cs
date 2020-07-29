@@ -38,9 +38,13 @@ namespace ToDoListCore.Controllers
         [HttpPost]
         public IActionResult AddDepartment([Bind("DepartmentID, Name, Description")] Department department)
         {
-            _context.Departments.Add(department);
-            _context.SaveChanges();
-            return RedirectToAction("Index");
+            if(ModelState.IsValid)
+            {
+                _context.Departments.Add(department);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(department);
         }
 
         [HttpGet]

@@ -43,14 +43,15 @@ namespace ToDoListCore.Controllers
                 ed.EmplSurname = item.Surname;
                 ed.EmailAddress = item.EmailAddress;
                 ed.PhoneNumber = item.PhoneNumber;
-                if(item.Department == null)
+                if (item.Department == null)
                 {
                     ed.DeptName = "";
-                } else
+                }
+                else
                 {
                     ed.DeptName = item.Department.Name;
                 }
-                
+
 
                 employeeDepartmentsLists.Add(ed);
             }
@@ -63,34 +64,44 @@ namespace ToDoListCore.Controllers
         {
             List<Department> departments = new List<Department>();
             departments = _context.Departments.ToList();
-            List<EmployeeDepartment> departmentsEDVM = new List<EmployeeDepartment>();
+            
             EmployeeDepartment ed = new EmployeeDepartment();
+            ed.departmentsEDVM = new List<Department>();
             foreach (var item in departments)
             {
-                ed = new EmployeeDepartment();
-                ed.DepartmentID = item.DepartmentID;
-                ed.DeptName = item.Name;
-                departmentsEDVM.Add(ed);
+                ed.departmentsEDVM.Add(item);
             }
             ed.DayOfBirthday = DateTime.Now;
-            ViewBag.ListOfDepartments = departmentsEDVM;
             return View(ed);
         }
 
         [HttpPost]
-        public IActionResult AddEmployee([Bind("EmployeeID, EmplName, EmplSurname, DayOfBirthday, EmailAddress, PhoneNumber, DepartmentID")] EmployeeDepartment employeeDep)
+        public IActionResult AddEmployee(EmployeeDepartment employeeDep)
         {
-            Employee employee = new Employee();
-            employee.EmployeeID = employeeDep.EmployeeID;
-            employee.DeptID = employeeDep.DepartmentID;
-            employee.Name = employeeDep.EmplName;
-            employee.Surname = employeeDep.EmplSurname;
-            employee.DayOfBirthday = employeeDep.DayOfBirthday;
-            employee.EmailAddress = employeeDep.EmailAddress;
-            employee.PhoneNumber = employeeDep.PhoneNumber;
-            _context.Add(employee);
-            _context.SaveChanges();
-            return RedirectToAction("Main");
+            List<Department> departments = new List<Department>();
+            departments = _context.Departments.ToList();
+            employeeDep.departmentsEDVM = new List<Department>();
+            foreach (var item in departments)
+            {
+                employeeDep.departmentsEDVM.Add(item);
+            }
+
+            if (ModelState.IsValid)
+            {
+                Employee employee = new Employee();
+                employee.DeptID = employeeDep.DepartmentID;
+                employee.EmployeeID = employeeDep.EmployeeID;
+                employee.Name = employeeDep.EmplName;
+                employee.Surname = employeeDep.EmplSurname;
+                employee.DayOfBirthday = employeeDep.DayOfBirthday;
+                employee.EmailAddress = employeeDep.EmailAddress;
+                employee.PhoneNumber = employeeDep.PhoneNumber;
+                _context.Add(employee);
+                _context.SaveChanges();
+                return RedirectToAction("Main");
+            }
+            return View(employeeDep);
+
         }
 
         [HttpGet]
@@ -104,10 +115,11 @@ namespace ToDoListCore.Controllers
             ewzl.EmailAddress = emp.EmailAddress;
             ewzl.PhoneNumber = emp.PhoneNumber;
             ewzl.DayOfBirthday = emp.DayOfBirthday;
-            if(emp.Department == null)
+            if (emp.Department == null)
             {
                 ewzl.DeptName = "";
-            } else
+            }
+            else
             {
                 ewzl.DeptName = emp.Department.Name;
             }
@@ -136,10 +148,11 @@ namespace ToDoListCore.Controllers
             ed1.PhoneNumber = emp.PhoneNumber;
             ed1.DayOfBirthday = emp.DayOfBirthday;
             ed1.DepartmentID = emp.DeptID;
-            if(emp.Department == null)
+            if (emp.Department == null)
             {
                 ed1.DeptName = "";
-            } else
+            }
+            else
             {
                 ed1.DeptName = emp.Department.Name;
             }
@@ -147,7 +160,7 @@ namespace ToDoListCore.Controllers
 
             foreach (var item in departments)
             {
-                if(item.DepartmentID != emp.DeptID)
+                if (item.DepartmentID != emp.DeptID)
                 {
                     ed1 = new EmployeeDepartment();
                     ed1.DepartmentID = item.DepartmentID;

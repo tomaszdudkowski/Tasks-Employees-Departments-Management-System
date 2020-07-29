@@ -24,8 +24,10 @@ namespace ToDoListCore.Models
         [DataType(DataType.Time)]
         public DateTime EndTime { get; set; }
         [Required(ErrorMessage = "Proszę wprowadzić tytuł zadania.")]
+        [StringLength(250)]
         public string Title { get; set; }
         [Required(ErrorMessage = "Proszę wprowadzić opis zadania.")]
+        [StringLength(250)]
         public string Description { get; set; }
         public bool IsEnd { get; set; }
 
@@ -33,8 +35,10 @@ namespace ToDoListCore.Models
         [Required]
         public int EmployeeID { get; set; }
         [Required(ErrorMessage = "Proszę wprowadzić imię pracownika.")]
+        [StringLength(250)]
         public string Name { get; set; }
         [Required(ErrorMessage = "Proszę wprowadzić nazwisko pracownika.")]
+        [StringLength(250)]
         public string Surname { get; set; }
         [Required(ErrorMessage = "Proszę wprowadzić datę urodzenia pracownika.")]
         [DataType(DataType.DateTime)]

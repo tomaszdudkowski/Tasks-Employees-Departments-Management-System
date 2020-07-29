@@ -8,31 +8,37 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="AddEmployee">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="EmplName">Imię pracownika: </label>
                 <input class="form-control" asp-for="EmplName" />
+                <span asp-validation-for="EmplName"></span>
             </div>
             <div class="form-group">
                 <label asp-for="EmplSurname">Nazwisko pracownika </label>
                 <input class="form-control" asp-for="EmplSurname" />
+                <span asp-validation-for="EmplSurname" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="DayOfBirthday">Data urodzenia pracownika: </label>
                 <input type="date" class="form-control" asp-for="DayOfBirthday" />
+                <span asp-validation-for="DayOfBirthday"></span>
             </div>
             <div class="form-group">
                 <label asp-for="EmailAddress">Adres E-Mail pracownika: </label>
                 <input class="form-control" asp-for="EmailAddress" />
+                <span asp-validation-for="EmailAddress"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PhoneNumber">Numer telefonu pracownika: </label>
                 <input class="form-control" asp-for="PhoneNumber" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
             </div>
             <div>
                 <label asp-for="DepartmentID">Wybierz dział: </label>
-                <select asp-for="DepartmentID" asp-items="@(new SelectList(ViewBag.ListOfDepartments, "DepartmentID", "DeptName"))"></select>
-                <input type="hidden" asp-for="DepartmentID">
-                <input type="hidden" asp-for="DeptName">
+                @*<select asp-for="DepartmentID" asp-items="@(new SelectList(ViewBag.ListOfDepartments, "DepartmentID", "DeptName"))"></select>*@
+                <select asp-for="DepartmentID" asp-items="@(new SelectList(Model.departmentsEDVM, "DepartmentID", "Name"))"></select>
+                <span asp-validation-for="DepartmentID" class="text-danger"></span>
             </div>
             <button class="btn btn-primary" type="submit">Dodaj nowego pracownika</button>
         </form>

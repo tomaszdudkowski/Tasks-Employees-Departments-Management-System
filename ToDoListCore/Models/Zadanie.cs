@@ -23,8 +23,10 @@ namespace ToDoListCore.Models
         [DataType(DataType.DateTime)]
         public DateTime EndTime { get; set; }
         [Required(ErrorMessage = "Proszę wprowadzić tytuł zadania.")]
+        [StringLength(250)]
         public string Title { get; set; }
         [Required(ErrorMessage = "Proszę wprowadzić opis zadania.")]
+        [StringLength(250)]
         public string Description { get; set; }
         public bool IsEnd { get; set; }
 

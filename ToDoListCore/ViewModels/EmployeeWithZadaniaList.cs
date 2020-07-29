@@ -13,8 +13,10 @@ namespace ToDoListCore.ViewModels
         [Required]
         public int EmployeeID { get; set; }
         [Required(ErrorMessage = "Proszę wprowadzić imię pracownika.")]
+        [StringLength(250)]
         public string Name { get; set; }
         [Required(ErrorMessage = "Proszę wprowadzić nazwisko pracownika.")]
+        [StringLength(250)]
         public string Surname { get; set; }
         [Required(ErrorMessage = "Proszę wprowadzić datę urodzenia pracownika.")]
         public DateTime DayOfBirthday { get; set; }
@@ -29,6 +31,7 @@ namespace ToDoListCore.ViewModels
         [Required]
         public int DepartmentID { get; set; }
         [Required(ErrorMessage = "Proszę wprowadzić nazwę działu.")]
+        [StringLength(250)]
         public string DeptName { get; set; }
 
         //Lista zadań przypisana do pracownika
