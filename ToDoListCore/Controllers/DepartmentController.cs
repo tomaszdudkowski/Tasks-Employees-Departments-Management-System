@@ -36,6 +36,7 @@ namespace ToDoListCore.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult AddDepartment([Bind("DepartmentID, Name, Description")] Department department)
         {
             if(ModelState.IsValid)
@@ -63,6 +64,7 @@ namespace ToDoListCore.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult EditDepartment(int id, Department department)
         {
             if (id != department.DepartmentID)

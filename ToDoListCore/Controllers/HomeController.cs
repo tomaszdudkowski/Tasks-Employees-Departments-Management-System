@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using ClosedXML.Excel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -30,31 +33,13 @@ namespace ToDoListCore.Controllers
 
         public ViewResult Main(string SearchString)
         {
-            var tasks = _context.Zadania;
-            /*EmployeeTaskVM vM;
-            List<EmployeeTaskVM> EmployeeTaskVMList = new List<EmployeeTaskVM>();
-            foreach(var item in tasks)
-            {
-                foreach(EmpInTask empl in item.Employees)
-                {
-                    vM = new EmployeeTaskVM();
-                    vM.ID = item.ID;
-                    vM.EmployeeID = empl.Employee.EmployeeID;
-                    vM.StartTime = item.StartTime;
-                    vM.EndTime = item.EndTime;
-                    vM.Title = item.Title;
-                    vM.Name = empl.Employee.Name;
-                    vM.Surname = empl.Employee.Surname;
-                    vM.IsEnd = item.IsEnd;
-                    EmployeeTaskVMList.Add(vM);
-                }
-            }*/
+            var tasks = _context.Zadania.ToList();
 
-            // Do wyszukiwania - naprawić
-            /*if(!String.IsNullOrEmpty(SearchString))
+            // Wyszukiwanie po tytule zadania
+            if(!String.IsNullOrEmpty(SearchString))
             {
                 tasks = tasks.Where(t => t.Title.ToLower().Contains(SearchString.ToLower())).ToList();
-            }*/
+            }
             return View(tasks);
         }
 
@@ -71,6 +56,7 @@ namespace ToDoListCore.Controllers
             return View(twel);
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public IActionResult AddTask([Bind("ID, StartDate, StartTime, EndDate, EndTime, Title, Description, IsEnd, EmployeesList")] TaskWithEmpsList taskEmp)
         {
@@ -110,9 +96,9 @@ namespace ToDoListCore.Controllers
                     eit.EmployeeID = empl.EmployeeID;
                     _context.ZadaniaInTasks.Add(eit);
                 }
+                _context.SaveChanges();
                 return RedirectToAction("Main");
             }
-            _context.SaveChanges();
             return View(taskEmp);
 
         }
@@ -178,6 +164,7 @@ namespace ToDoListCore.Controllers
             return View(twel);
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public IActionResult EditTask(int id, [Bind("ID, StartDate, StartTime, EndDate, EndTime, Title, Description, IsEnd, EmployeesList")] TaskWithEmpsList taskEmp)
         {
@@ -290,6 +277,57 @@ namespace ToDoListCore.Controllers
         private bool TaskEmp(int EmplID, int TaskID)
         {
             return _context.ZadaniaInTasks.Any(t => t.EmployeeID == EmplID && t.ZadanieID == TaskID);
+        }
+
+        private DataTable GetDataTable()
+        {
+            var tasks = _context.Zadania;
+
+            // Creating data table
+            DataTable dt = new DataTable();
+
+            // Setting table name
+            dt.TableName = "TaskTable";
+
+            // Add columns
+            dt.Columns.Add("ID", typeof(int));
+            dt.Columns.Add("DateStart", typeof(DateTime));
+            dt.Columns.Add("TimeStart", typeof(DateTime));
+            dt.Columns.Add("DateEnd", typeof(DateTime));
+            dt.Columns.Add("TimeEnd", typeof(DateTime));
+            dt.Columns.Add("Tytuł", typeof(string));
+            dt.Columns.Add("Opis", typeof(string));
+
+            // Add rows in data table
+            foreach (var zadanie in tasks)
+            {
+                dt.Rows.Add(zadanie.ID, zadanie.StartDate, zadanie.StartTime, zadanie.EndDate, zadanie.EndTime, zadanie.Title, zadanie.Description);
+            }
+
+            dt.AcceptChanges();
+
+            return dt;
+        }
+
+        public IActionResult WriteDataToExcel()
+        {
+            DataTable dt = GetDataTable();
+
+            // Name of file
+            string fileName = "Sample.xlsx";
+
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                // Add data table to workbook
+                wb.Worksheets.Add(dt);
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    // Return xlsx Excel file
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+                }
+            }
+           
         }
     }
 }

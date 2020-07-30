@@ -16,7 +16,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Description">Opis działu firmy: </label>
-                <input class="form-control" asp-for="Description" />
+                <textarea class="form-control" asp-for="Description"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <button class="btn btn-primary" type="submit" action="EditTask">Aktualizuj dane działu</button>
@@ -24,3 +24,7 @@
         </form>
     </div>
 </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

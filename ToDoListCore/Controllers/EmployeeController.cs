@@ -75,6 +75,7 @@ namespace ToDoListCore.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult AddEmployee(EmployeeDepartment employeeDep)
         {
             List<Department> departments = _context.Departments.ToList();
@@ -167,6 +168,7 @@ namespace ToDoListCore.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult EditEmployee(int id, EmployeeDepartment employeeDep)
         {
             List<Department> departments = _context.Departments.ToList();
