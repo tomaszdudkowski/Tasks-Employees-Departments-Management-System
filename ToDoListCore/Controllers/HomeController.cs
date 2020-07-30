@@ -257,7 +257,7 @@ namespace ToDoListCore.Controllers
                 }
                 return RedirectToAction(nameof(Main));
             }
-            return View(task);
+            return View(taskEmp);
         }
 
         [HttpGet]

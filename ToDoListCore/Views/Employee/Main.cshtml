@@ -22,15 +22,22 @@
         <tbody>
             @foreach (ToDoListCore.ViewModels.EmployeeDepartment ed in Model)
             {
-                <tr>
-                    <td>@ed.EmployeeID</td>
-                    <td>@ed.EmplName</td>
-                    <td>@ed.EmplSurname</td>
-                    <td>@ed.EmailAddress</td>
-                    <td>@ed.PhoneNumber</td>
+            <tr>
+                <td>@ed.EmployeeID</td>
+                <td>@ed.EmplName</td>
+                <td>@ed.EmplSurname</td>
+                <td>@ed.EmailAddress</td>
+                <td>@ed.PhoneNumber</td>
+                @if (ed.DeptName == "")
+                {
+                    <td class="text-danger">Nieprzydzielono</td>
+                }
+                else
+                {
                     <td>@ed.DeptName</td>
-                    <td><a asp-action="DetailEmployee" asp-route-id="@ed.EmployeeID" class="btn btn-secondary btn-sm">Szczegóły</a> | <a asp-action="EditEmployee" asp-route-id="@ed.EmployeeID" class="btn btn-secondary btn-sm">Edytuj</a> | <a asp-action="DeleteEmployee" asp-route-id="@ed.EmployeeID" class="btn btn-secondary btn-sm">Usuń</a></td>
-                </tr>
+                }
+                <td><a asp-action="DetailEmployee" asp-route-id="@ed.EmployeeID" class="btn btn-secondary btn-sm">Szczegóły</a> | <a asp-action="EditEmployee" asp-route-id="@ed.EmployeeID" class="btn btn-secondary btn-sm">Edytuj</a> | <a asp-action="DeleteEmployee" asp-route-id="@ed.EmployeeID" class="btn btn-secondary btn-sm">Usuń</a></td>
+            </tr>
             }
         </tbody>
     </table>

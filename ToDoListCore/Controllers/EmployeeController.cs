@@ -62,9 +62,8 @@ namespace ToDoListCore.Controllers
         [HttpGet]
         public ViewResult AddEmployee()
         {
-            List<Department> departments = new List<Department>();
-            departments = _context.Departments.ToList();
-            
+            List<Department> departments = _context.Departments.ToList();
+
             EmployeeDepartment ed = new EmployeeDepartment();
             ed.departmentsEDVM = new List<Department>();
             foreach (var item in departments)
@@ -78,8 +77,7 @@ namespace ToDoListCore.Controllers
         [HttpPost]
         public IActionResult AddEmployee(EmployeeDepartment employeeDep)
         {
-            List<Department> departments = new List<Department>();
-            departments = _context.Departments.ToList();
+            List<Department> departments = _context.Departments.ToList();
             employeeDep.departmentsEDVM = new List<Department>();
             foreach (var item in departments)
             {
@@ -135,48 +133,44 @@ namespace ToDoListCore.Controllers
         public IActionResult EditEmployee(int id)
         {
             Employee emp = _context.Employees.Find(id);
-            List<Department> departments = new List<Department>();
-            departments = _context.Departments.ToList();
-            List<EmployeeDepartment> departmentsEDVM = new List<EmployeeDepartment>();
-            EmployeeDepartment ed1 = new EmployeeDepartment();
+            List<Department> departments = _context.Departments.ToList();
+            EmployeeDepartment ed;
 
-            ed1 = new EmployeeDepartment();
-            ed1.EmployeeID = emp.EmployeeID;
-            ed1.EmplName = emp.Name;
-            ed1.EmplSurname = emp.Surname;
-            ed1.EmailAddress = emp.EmailAddress;
-            ed1.PhoneNumber = emp.PhoneNumber;
-            ed1.DayOfBirthday = emp.DayOfBirthday;
-            ed1.DepartmentID = emp.DeptID;
+            ed = new EmployeeDepartment();
+            ed.EmployeeID = emp.EmployeeID;
+            ed.EmplName = emp.Name;
+            ed.EmplSurname = emp.Surname;
+            ed.EmailAddress = emp.EmailAddress;
+            ed.PhoneNumber = emp.PhoneNumber;
+            ed.DayOfBirthday = emp.DayOfBirthday;
+            ed.DepartmentID = emp.DeptID;
+            ed.departmentsEDVM = new List<Department>();
             if (emp.Department == null)
             {
-                ed1.DeptName = "";
+                ed.DeptName = "";
             }
             else
             {
-                ed1.DeptName = emp.Department.Name;
+                ed.DeptName = emp.Department.Name;
+                ed.departmentsEDVM.Add(emp.Department);
             }
-            departmentsEDVM.Add(ed1);
 
             foreach (var item in departments)
             {
                 if (item.DepartmentID != emp.DeptID)
                 {
-                    ed1 = new EmployeeDepartment();
-                    ed1.DepartmentID = item.DepartmentID;
-                    ed1.DeptName = item.Name;
-                    departmentsEDVM.Add(ed1);
+                    ed.departmentsEDVM.Add(item);
                 }
             }
 
-            ViewBag.ListOfDepartments = departmentsEDVM;
-
-            return View(departmentsEDVM[0]);
+            return View(ed);
         }
 
         [HttpPost]
         public IActionResult EditEmployee(int id, EmployeeDepartment employeeDep)
         {
+            List<Department> departments = _context.Departments.ToList();
+
             Employee employee = new Employee();
             employee.EmployeeID = employeeDep.EmployeeID;
             employee.Name = employeeDep.EmplName;
@@ -185,7 +179,12 @@ namespace ToDoListCore.Controllers
             employee.EmailAddress = employeeDep.EmailAddress;
             employee.PhoneNumber = employeeDep.PhoneNumber;
             employee.DeptID = employeeDep.DepartmentID;
+            employeeDep.departmentsEDVM = new List<Department>();
 
+            foreach (var item in departments)
+            {
+                employeeDep.departmentsEDVM.Add(item);
+            }
 
             if (id != employeeDep.EmployeeID)
             {
