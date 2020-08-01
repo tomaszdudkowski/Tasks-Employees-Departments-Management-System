@@ -19,6 +19,7 @@ This application demonstrates me learning ASP.NET Core and Entity Framwork Core.
 # Requirements
 
 <li><a href="https://dotnet.microsoft.com/download">.NET Core</a></li>
+<li><a href="https://www.microsoft.com/en-us/sql-server/sql-server-2019">SQL Server 2019</a></li>
 
 # Features:
 <li>show list of tasks, employees and departments</li>
