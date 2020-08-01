@@ -20,11 +20,13 @@ namespace ToDoListCore.Controllers
 
         private readonly ApplicationDbContext _context;
 
+        private static bool _sortStatus;
+
         public HomeController(ApplicationDbContext context, ILogger<HomeController> logger)
         {
             _context = context;
             _logger = logger;
-        }
+    }
 
         public IActionResult Index()
         {
@@ -33,10 +35,11 @@ namespace ToDoListCore.Controllers
 
         public ViewResult Main(string SearchString)
         {
+            _sortStatus = true;
             var tasks = _context.Zadania.ToList();
 
             // Wyszukiwanie po tytule zadania
-            if(!String.IsNullOrEmpty(SearchString))
+            if (!String.IsNullOrEmpty(SearchString))
             {
                 tasks = tasks.Where(t => t.Title.ToLower().Contains(SearchString.ToLower())).ToList();
             }
@@ -74,7 +77,7 @@ namespace ToDoListCore.Controllers
             task.Description = taskEmp.Description;
             task.IsEnd = taskEmp.IsEnd;
 
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 foreach (var emp in taskEmp.EmployeesList.Where(e => e.checkBoxEmp == true))
                 {
@@ -279,6 +282,57 @@ namespace ToDoListCore.Controllers
             return _context.ZadaniaInTasks.Any(t => t.EmployeeID == EmplID && t.ZadanieID == TaskID);
         }
 
+        [HttpGet]
+        public ViewResult SortTask(string id)
+        {
+            var tasks = _context.Zadania.ToList();
+
+            // Order by title
+            if (_sortStatus != false && id == "Title")
+            {
+                tasks = tasks.OrderBy(t => t.Title).ToList();
+                _sortStatus = false;
+            }
+            // Order by title desc
+            else if (_sortStatus != true && id == "Title")
+            {
+                tasks = tasks.OrderByDescending(t => t.Title).ToList();
+                _sortStatus = true;
+            }
+
+            // Order by start date
+            if (_sortStatus != true && id == "StartDate")
+            {
+                tasks = tasks.OrderBy(s => s.StartTime).ToList();
+                tasks = tasks.OrderBy(s => s.StartDate).ToList();
+                _sortStatus = true;
+            }
+            // Order by start date desc
+            else if (_sortStatus != false && id == "StartDate")
+            {
+                tasks = tasks.OrderByDescending(s => s.StartTime).ToList();
+                tasks = tasks.OrderByDescending(s => s.StartDate).ToList();
+                _sortStatus = false;
+            }
+
+            // Order by end date
+            if (_sortStatus != true && id == "EndDate")
+            {
+                tasks = tasks.OrderBy(s => s.EndTime).ToList();
+                tasks = tasks.OrderBy(s => s.EndDate).ToList();
+                _sortStatus = true;
+            }
+            // Order by end date desc
+            else if (_sortStatus != false && id == "EndDate")
+            {
+                tasks = tasks.OrderByDescending(s => s.EndTime).ToList();
+                tasks = tasks.OrderByDescending(s => s.EndDate).ToList();
+                _sortStatus = false;
+            }
+
+            return View("Main", tasks);
+        }
+
         private DataTable GetDataTable()
         {
             var tasks = _context.Zadania;
@@ -327,7 +381,7 @@ namespace ToDoListCore.Controllers
                     return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
                 }
             }
-           
+
         }
     }
 }

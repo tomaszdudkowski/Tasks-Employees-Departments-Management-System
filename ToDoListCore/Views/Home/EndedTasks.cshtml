@@ -5,9 +5,9 @@
         <thead class="tab">
             <tr>
                 <th></th>
-                <th>Data rozpoczecia</th>
-                <th>Data zakończenia</th>
-                <th>Tytuł</th>
+                <th><a asp-action="SortTask" asp-route-id="StartDate">Data rozpoczęcia</a></th>
+                <th><a asp-action="SortTask" asp-route-id="EndDate">Data zakończenia</a></th>
+                <th><a asp-action="SortTask" asp-route-id="Title">Tytuł</a></th>
             </tr>
         </thead>
         <tbody>
@@ -20,7 +20,7 @@
                 <td>@t.StartDate.ToString("dd-MM-yyyy") @t.StartTime.ToString("HH:mm")</td>
                 <td>@t.EndDate.ToString("dd-MM-yyyy") @t.EndTime.ToString("HH:mm")</td>
                 <td>@t.Title</td>
-                <td><a asp-action="DetailTask" asp-route-id="@t.ID" class="btn btn-secondary btn-sm">Szczegóły</a> | <a asp-action="EditTask" asp-route-id="@t.ID" class="btn btn-secondary btn-sm">Edytuj</a> | <a asp-action="DeleteTask" asp-route-id="@t.ID" class="btn btn-secondary btn-sm">Usuń</a></td>
+                <td><a asp-action="DetailTask" asp-route-id="@t.ID" class="btn btn-info btn-sm">Szczegóły</a> | <a asp-action="EditTask" asp-route-id="@t.ID" class="btn btn-secondary btn-sm">Edytuj</a> | <a asp-action="DeleteTask" asp-route-id="@t.ID" class="btn btn-danger btn-sm">Usuń</a></td>
             </tr>
                 }
             }
